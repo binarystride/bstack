@@ -1,0 +1,33 @@
+{
+  "name": "bstack",
+  "displayName": "bstack",
+  "version": "1.0.0",
+  "description": "Rigorous agent workflows you can parallelize with confidence. Write less code, at higher quality. Portable across agent harnesses.",
+  "license": "MIT",
+  "keywords": [
+    "bstack",
+    "workflow",
+    "principles",
+    "review",
+    "planning",
+    "subagents",
+    "verification"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "workflow",
+    "principles",
+    "review",
+    "planning"
+  ],
+  "skills": "./skills/",
+  "agents": [
+    "./agents/poteto-agent.md",
+    "./agents/comment-sicko.md"
+  ],
+  "author": {
+    "name": "Binary Stride"
+  },
+  "homepage": "https://github.com/binarystride/bstack",
+  "repository": "https://github.com/binarystride/bstack"
+}

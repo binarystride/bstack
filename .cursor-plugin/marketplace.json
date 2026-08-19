@@ -1,15 +1,15 @@
 {
-  "name": "pstack",
+  "name": "bstack",
   "owner": {
-    "name": "Denis Pshenov"
+    "name": "Binary Stride"
   },
   "metadata": {
-    "description": "Portable build of pstack: rigorous agent workflows that run on any harness."
+    "description": "Portable build of bstack: rigorous agent workflows that run on any harness."
   },
   "plugins": [
     {
-      "name": "pstack",
-      "source": "pstack",
+      "name": "bstack",
+      "source": "bstack",
       "description": "Rigorous agent workflows you can parallelize with confidence."
     }
   ]

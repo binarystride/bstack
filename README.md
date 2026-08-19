@@ -1,29 +1,29 @@
-# pstack marketplace
+# bstack marketplace
 
-A one-plugin marketplace holding [pstack](./pstack), a portable build of [poteto's pstack](https://github.com/cursor/plugins/tree/main/pstack) that runs on any agent harness.
+A one-plugin marketplace holding [bstack](./bstack), a portable build of [poteto's pstack](https://github.com/cursor/plugins/tree/main/pstack) that runs on any agent harness.
 
 ## Install
 
-**Codex, Cursor, GitHub Copilot, VS Code, Kiro, ChatGPT** read the [Agent Plugins](https://agent-plugins.org/) standard. Point your client at this repo and install the plugin from the `pstack/` directory.
+**Codex, Cursor, GitHub Copilot, VS Code, Kiro, ChatGPT** read the [Agent Plugins](https://agent-plugins.org/) standard. Point your client at this repo and install the plugin from the `bstack/` directory.
 
 **Claude Code:**
 
 ```bash
-/plugin marketplace add <your-org>/<this-repo>
+/plugin marketplace add binarystride/bstack
 ```
 
 ```bash
-/plugin install pstack@pstack
+/plugin install bstack@bstack
 ```
 
-**Cursor** reads either manifest. Add this repo as a marketplace and install `pstack`.
+**Cursor** reads either manifest. Add this repo as a marketplace and install `bstack`.
 
 ## Layout
 
 ```
 .claude-plugin/marketplace.json   Claude Code marketplace
 .cursor-plugin/marketplace.json   Cursor marketplace
-pstack/
+bstack/
   plugin.json                     Agent Plugins v1 manifest
   .claude-plugin/plugin.json      Claude Code manifest
   .cursor-plugin/plugin.json      Cursor manifest
@@ -32,11 +32,7 @@ pstack/
   docs/guide/                     the walkthrough
 ```
 
-One `skills/` tree, three manifests. The Agent Plugins spec covers skills and MCP servers only, so the two subagents need the per-harness manifests. Nothing breaks without them; see the plugin [readme](./pstack/README.md#subagents).
-
-## Before you publish
-
-Set `owner.name` in both `marketplace.json` files to your team, and replace `<your-org>/<this-repo>` in the install commands above and in [`pstack/README.md`](./pstack/README.md).
+One `skills/` tree, three manifests. The Agent Plugins spec covers skills and MCP servers only, so the two subagents need the per-harness manifests. Nothing breaks without them; see the plugin [readme](./bstack/README.md#subagents).
 
 ## License
 

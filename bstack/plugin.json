@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "bstack",
+  "version": "1.0.0",
+  "description": "Rigorous agent workflows you can parallelize with confidence. Write less code, at higher quality. Portable across agent harnesses.",
+  "license": "MIT",
+  "keywords": [
+    "bstack",
+    "workflow",
+    "principles",
+    "review",
+    "planning",
+    "subagents",
+    "verification"
+  ],
+  "author": {
+    "name": "Binary Stride"
+  },
+  "homepage": "https://github.com/binarystride/bstack",
+  "repository": "https://github.com/binarystride/bstack"
+}
