@@ -31,11 +31,11 @@ A repo with a checked-in harness gets better results than one without, because t
 Pick something real but small, and describe it the way you'd describe it to a colleague:
 
 ```text
-/poteto-mode add a --json flag to this command. text output stays byte-identical. verify both.
+/mode add a --json flag to this command. text output stays byte-identical. verify both.
 ```
 
-Watch the todo list. The first item is always "read the Principles section". The rest are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/poteto-mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
+Watch the todo list. The first item is always "read the Principles section". The rest are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
 
-From here you can type normal follow-ups. `/poteto-mode` is sticky. It stays on for the conversation until you opt out by saying so.
+From here you can type normal follow-ups without repeating `/mode`. Invoking it loads its rules into the conversation, and they stay there, so the agent keeps applying them. Re-invoke it when you start a genuinely different task, or say "new task" so it re-matches a playbook instead of continuing the old one.
 
-Next: [Route work through `/poteto-mode`](./02-poteto-mode.md).
+Next: [Route work through `/mode`](./02-mode.md).

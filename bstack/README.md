@@ -35,21 +35,21 @@ Three things are needed only by the specific steps that reach for them, and each
 | Tool | Needed by | Without it |
 |---|---|---|
 | `gh` | anything touching PRs | the PR playbooks lose their status source |
-| `bun` | `watch-pr` and `orch`, two optional CLIs under `skills/poteto-mode/scripts/` | the babysit playbook falls back to `gh api graphql`; orchestrate reads its plain TSV and JSON directly |
+| `bun` | `watch-pr` and `orch`, two optional CLIs under `skills/mode/scripts/` | the babysit playbook falls back to `gh api graphql`; orchestrate reads its plain TSV and JSON directly |
 
 Everything works on plain git and plain GitHub PRs. Nothing here needs a stacking tool; where a playbook builds a stack, each branch is cut from the one below it and each PR targets its parent branch. If your team runs a stacking tool, it can own those mechanics without changing any of the gates.
 
 ## get started
 
-Use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) whenever you're doing something that needs rigor. It reads your request, picks a playbook, and runs the other skills as the steps need them.
+Use [`/mode`](./skills/mode/SKILL.md) whenever you're doing something that needs rigor. It reads your request, picks a playbook, and runs the other skills as the steps need them.
 
 ```
-/poteto-mode this pr has a subtle bug where the scroll drifts every 750ms even when idle. repro
+/mode this pr has a subtle bug where the scroll drifts every 750ms even when idle. repro
 first, then fix and verify.
 ```
 
 ```
-/poteto-mode i'm going to bed. land the stack even if ci flakes. i want everything merged by
+/mode i'm going to bed. land the stack even if ci flakes. i want everything merged by
 morning.
 ```
 
@@ -60,46 +60,46 @@ New here? The [bstack guide](./docs/guide/README.md) walks through a first real 
 
 | playbook | for |
 |---|---|
-| [investigation](./skills/poteto-mode/playbooks/investigation.md) | a read-only question. how does x work, why was y built this way, are we sure. |
-| [bug fix](./skills/poteto-mode/playbooks/bug-fix.md) | reproduce a defect, root-cause it, and fix with runtime evidence. |
-| [perf](./skills/poteto-mode/playbooks/perf-issue.md) | trace a measured slowness and improve it against a baseline. |
-| [hillclimb](./skills/poteto-mode/playbooks/hillclimb.md) | sustained, scientific improvement of one metric against a target, looping hypotheses with before/after measurement and one commit per accepted win. |
-| [runtime forensics](./skills/poteto-mode/playbooks/runtime-forensics.md) | diagnose a live symptom (leak, idle-cpu spin, glitch) from instrumentation. |
-| [trace forensics](./skills/poteto-mode/playbooks/trace-forensics.md) | diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot). |
-| [feature](./skills/poteto-mode/playbooks/feature.md) | new or changed behavior, built from a named data shape. |
-| [refactoring](./skills/poteto-mode/playbooks/refactoring.md) | a behavior-preserving change to structure or shape. |
-| [prototype](./skills/poteto-mode/playbooks/prototype.md) | a throwaway sketch to make a design or behavioral decision cheaply, or to settle an empirical fork by observing it. |
-| [visual parity](./skills/poteto-mode/playbooks/visual-parity.md) | pixel-exact ui equivalence between two implementations. |
-| [authoring a skill](./skills/poteto-mode/playbooks/authoring-a-skill.md) | writing or editing a SKILL.md. |
-| [eval](./skills/poteto-mode/playbooks/eval.md) | test how a skill or prompt change affects agent behavior, blinded. |
-| [babysit](./skills/poteto-mode/playbooks/babysit.md) | drive a pr or a stack to merge-ready: conflicts, review threads, ci. |
-| [shipping](./skills/poteto-mode/playbooks/shipping.md) | independently verify a green stack, then land the contiguous verified run bottom-up, one PR at a time. |
-| [autonomous run](./skills/poteto-mode/playbooks/autonomous-run.md) | drive a long task to completion without stopping. |
-| [orchestrate](./skills/poteto-mode/playbooks/orchestrate.md) | a standing project handed to one coordinator chat: multi-day, many stacked prs, fleets of subagents. |
-| [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr and root verification of each merge-ready head. |
-| [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | build and verify one linear stack of PRs for the operator to review and land. |
-| [session pickup](./skills/poteto-mode/playbooks/session-pickup.md) | resume or take over a prior agent's in-flight work. |
-| [pause safely](./skills/poteto-mode/playbooks/pause-safely.md) | suspend in-flight work cleanly so it can be resumed later. |
-| [multi-phase plan](./skills/poteto-mode/playbooks/multi-phase-plan.md) | work that spans phases or stacked PRs. |
-| [opening a pr](./skills/poteto-mode/playbooks/opening-a-pr.md) | the commit, description, and review-readiness pass before you open the pr. |
-| [worktree cleanup](./skills/poteto-mode/playbooks/worktree-cleanup.md) | reclaim disk by pruning merged or abandoned worktrees and stale ios simulators, safety-gated. |
+| [investigation](./skills/mode/playbooks/investigation.md) | a read-only question. how does x work, why was y built this way, are we sure. |
+| [bug fix](./skills/mode/playbooks/bug-fix.md) | reproduce a defect, root-cause it, and fix with runtime evidence. |
+| [perf](./skills/mode/playbooks/perf-issue.md) | trace a measured slowness and improve it against a baseline. |
+| [hillclimb](./skills/mode/playbooks/hillclimb.md) | sustained, scientific improvement of one metric against a target, looping hypotheses with before/after measurement and one commit per accepted win. |
+| [runtime forensics](./skills/mode/playbooks/runtime-forensics.md) | diagnose a live symptom (leak, idle-cpu spin, glitch) from instrumentation. |
+| [trace forensics](./skills/mode/playbooks/trace-forensics.md) | diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot). |
+| [feature](./skills/mode/playbooks/feature.md) | new or changed behavior, built from a named data shape. |
+| [refactoring](./skills/mode/playbooks/refactoring.md) | a behavior-preserving change to structure or shape. |
+| [prototype](./skills/mode/playbooks/prototype.md) | a throwaway sketch to make a design or behavioral decision cheaply, or to settle an empirical fork by observing it. |
+| [visual parity](./skills/mode/playbooks/visual-parity.md) | pixel-exact ui equivalence between two implementations. |
+| [authoring a skill](./skills/mode/playbooks/authoring-a-skill.md) | writing or editing a SKILL.md. |
+| [eval](./skills/mode/playbooks/eval.md) | test how a skill or prompt change affects agent behavior, blinded. |
+| [babysit](./skills/mode/playbooks/babysit.md) | drive a pr or a stack to merge-ready: conflicts, review threads, ci. |
+| [shipping](./skills/mode/playbooks/shipping.md) | independently verify a green stack, then land the contiguous verified run bottom-up, one PR at a time. |
+| [autonomous run](./skills/mode/playbooks/autonomous-run.md) | drive a long task to completion without stopping. |
+| [orchestrate](./skills/mode/playbooks/orchestrate.md) | a standing project handed to one coordinator chat: multi-day, many stacked prs, fleets of subagents. |
+| [autopilot-full](./skills/mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr and root verification of each merge-ready head. |
+| [autopilot-stack](./skills/mode/playbooks/autopilot-stack.md) | build and verify one linear stack of PRs for the operator to review and land. |
+| [session pickup](./skills/mode/playbooks/session-pickup.md) | resume or take over a prior agent's in-flight work. |
+| [pause safely](./skills/mode/playbooks/pause-safely.md) | suspend in-flight work cleanly so it can be resumed later. |
+| [multi-phase plan](./skills/mode/playbooks/multi-phase-plan.md) | work that spans phases or stacked PRs. |
+| [opening a pr](./skills/mode/playbooks/opening-a-pr.md) | the commit, description, and review-readiness pass before you open the pr. |
+| [worktree cleanup](./skills/mode/playbooks/worktree-cleanup.md) | reclaim disk by pruning merged or abandoned worktrees and stale ios simulators, safety-gated. |
 
 </details>
 
 When invoked it:
 
 1. Opens a todo list. The first item is reading the inline principles index in the skill.
-2. Matches your task to a [playbook](./skills/poteto-mode/playbooks/) and copies the steps in verbatim.
+2. Matches your task to a [playbook](./skills/mode/playbooks/) and copies the steps in verbatim.
 3. Routes to the other skills as the steps fire.
 4. Writes unslopped replies framed for the consumer and the maintainer.
 
-The full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/poteto-mode/SKILL.md).
+The full rules and playbooks live in [`skills/mode/SKILL.md`](./skills/mode/SKILL.md).
 
 It pairs well with any repeat mechanism your harness offers, so a long task can run for hours without losing rigor.
 
 ## skills
 
-[`/poteto-mode`](./skills/poteto-mode/SKILL.md) runs most of these for you when a step needs them. The table below is for when you want one directly:
+[`/mode`](./skills/mode/SKILL.md) runs most of these for you when a step needs them. The table below is for when you want one directly:
 
 ```
 /how do we cancel runs? do we have an n+1 when we look up every run to cancel?
@@ -114,7 +114,7 @@ It pairs well with any repeat mechanism your harness offers, so a long task can 
 
 | skill | use it when |
 |---|---|
-| [`/poteto-mode`](./skills/poteto-mode/SKILL.md) | default entry point for any non-trivial task. |
+| [`/mode`](./skills/mode/SKILL.md) | default entry point for any non-trivial task. |
 | [`/how`](./skills/how/SKILL.md) | you want a walkthrough of how a subsystem works. |
 | [`/why`](./skills/why/SKILL.md) | you want to know why something was built this way. discovers the MCP servers you can actually reach at run time and queries each evidence category in parallel (source control, issue tracker, long-form docs, real-time chat, infra observability, error tracking, analytics warehouse). |
 | [`/blast-radius`](./skills/blast-radius/SKILL.md) | you have a small-looking change and want to know what else it could break, with the one fact it's safe because of proven by running code, not asserted. |
@@ -151,14 +151,14 @@ Where a skill wants independent reviewers or competing candidates, it asks for *
 
 Two subagents ship in [`agents/`](./agents), which only Claude Code and Cursor load. The Agent Plugins standard leaves agents out of v1 on purpose.
 
-- [`poteto-agent`](./agents/poteto-agent.md) is a routing target that reads `poteto-mode` in full, including its inline principles index, before doing any work. A plain general-purpose agent skips that read and drifts.
+- [`mode-agent`](./agents/mode-agent.md) is a routing target that reads `mode` in full, including its inline principles index, before doing any work. A plain general-purpose agent skips that read and drifts.
 - [Comment Sicko](./agents/comment-sicko.md) is a read-only comment reviewer, usually invoked through [`/no-comments`](./skills/no-comments/SKILL.md).
 
-On a harness with no agents directory, nothing breaks. `/no-comments` carries Comment Sicko's prompt at [`skills/no-comments/references/comment-sicko.md`](./skills/no-comments/references/comment-sicko.md) and spawns an ordinary subagent with it. `/poteto-mode` works invoked directly; you only lose the automatic routing step.
+On a harness with no agents directory, nothing breaks. `/no-comments` carries Comment Sicko's prompt at [`skills/no-comments/references/comment-sicko.md`](./skills/no-comments/references/comment-sicko.md) and spawns an ordinary subagent with it. `/mode` works invoked directly; you only lose the automatic routing step.
 
 ## principles
 
-Twenty-one short skills, one principle each. `poteto-mode` indexes them inline and reads that index at task start. The standalone files are there so other skills can reference a principle by name, and so the index can point at the full rule for each.
+Twenty-one short skills, one principle each. `mode` indexes them inline and reads that index at task start. The standalone files are there so other skills can reference a principle by name, and so the index can point at the full rule for each.
 
 <details>
 <summary>all twenty-one principles</summary>
@@ -198,9 +198,9 @@ Everything here follows upstream's intent. The changes are about making that int
 - **Paths.** Nothing constructs a transcript or skills path. Harnesses disagree on both the root and the directory naming, so the skills discover it and stop if they cannot.
 - **Vendor names.** No product is named as the thing to react to. PR review triage keys on "an automated reviewer", and the watcher detects bots three ways with no setup: a `[bot]` account suffix, a list of common hosted reviewers, and a shape match on the run marker automated reviewers stamp in the comment body.
 - **Built-ins.** References to one harness's `/loop`, `/babysit`, and `create-skill` became descriptions of what to do, with the fallback named so nobody is stuck.
-- **Vendored.** `deslop`, `control-cli`, and `control-ui` came from `cursor-team-kit`, because `poteto-mode` calls them and a plugin should not depend on a plugin you did not install. MIT, unmodified; see [LICENSE.cursor-team-kit](./LICENSE.cursor-team-kit).
+- **Vendored.** `deslop`, `control-cli`, and `control-ui` came from `cursor-team-kit`, because `mode` calls them and a plugin should not depend on a plugin you did not install. MIT, unmodified; see [LICENSE.cursor-team-kit](./LICENSE.cursor-team-kit).
 - **Dropped.** Anything whose job was reading your chat transcripts, because harnesses disagree on where those live and half of them do not key by workspace at all: `recall`, `reflect`, and the `LAST_CHAT` column of `worktree-audit.sh`. Also upstream's `setup-pstack` (wrote a Cursor-only rules file), `automate-me`, `create-verification-skill`, `maintain-verification-skill` (all wrote into `.cursor/skills/`), and the `benny` Slack automation pack (built on Cursor Automations).
-- **Sticky mode.** `poteto-mode` was a Cursor mode skill that stayed on across turns. That frontmatter is Cursor-only, so here it is an ordinary skill you invoke per task.
+- **Sticky mode.** `mode` was a Cursor mode skill that stayed on across turns. That frontmatter is Cursor-only, so here it is an ordinary skill you invoke per task.
 
 ## license
 

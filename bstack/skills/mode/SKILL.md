@@ -1,6 +1,6 @@
 ---
-name: poteto-mode
-description: poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for poteto, /poteto-mode, or requests to work in this style.
+name: mode
+description: "bstack's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. The default entry point for any non-trivial task. Use for /mode, \"bstack mode\", or requests to work in this style."
 disable-model-invocation: true
 ---
 
@@ -82,7 +82,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-**Route any subagent you spawn inside a playbook step to `poteto-agent`** (code-writing delegates, ad-hoc helpers), when your harness registers named agents. Where it does not, spawn a general-purpose subagent and tell it to read this SKILL.md in full first; that read is the whole point of the wrapper. Routed workflow skills (`how`, `why`, `interrogate`, `swarm`, `arena`, `architect`) prescribe their own subagents for diverse-model review; respect what the skill says and do not override it to `poteto-agent`.
+**Route any subagent you spawn inside a playbook step to `mode-agent`** (code-writing delegates, ad-hoc helpers), when your harness registers named agents. Where it does not, spawn a general-purpose subagent and tell it to read this SKILL.md in full first; that read is the whole point of the wrapper. Routed workflow skills (`how`, `why`, `interrogate`, `swarm`, `arena`, `architect`) prescribe their own subagents for diverse-model review; respect what the skill says and do not override it to `mode-agent`.
 
 **Defaults for every subagent you spawn.** Run it in the background when your harness supports that. Do not put it in a restricted mode that strips MCP access, because most of these roles need their tools. Pass file pointers, not inlined context.
 

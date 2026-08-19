@@ -1,10 +1,10 @@
 # Make it yours
 
-poteto-mode is one person's style. The machinery underneath, playbooks, routing, model roles, works just as well wearing yours. This page covers generating a personal mode, capturing lessons from a session, authoring a focused skill, and testing a skill change before you trust it.
+mode is one person's style. The machinery underneath, playbooks, routing, model roles, works just as well wearing yours. This page covers generating a personal mode, capturing lessons from a session, authoring a focused skill, and testing a skill change before you trust it.
 
 ## Write your own mode skill
 
-`poteto-mode` is a skill like any other. To get your own, copy its shape and change the parts that are opinions rather than machinery.
+`mode` is a skill like any other. To get your own, copy its shape and change the parts that are opinions rather than machinery.
 
 What is machinery, and worth keeping:
 
@@ -24,10 +24,10 @@ Run the draft through [`/unslop`](../../skills/unslop/SKILL.md) before you commi
 When you already know the workflow you want to capture:
 
 ```text
-/poteto-mode write a skill for verifying database migrations in this repo
+/mode write a skill for verifying database migrations in this repo
 ```
 
-Writing a skill matches the [Authoring or modifying a skill playbook](../../skills/poteto-mode/playbooks/authoring-a-skill.md), which routes through your harness's skill-authoring flow when it has one, validates the frontmatter and links, and ships the result through the Opening a PR playbook. Agent-facing prose has a higher bar than human prose, because an unhelpful sentence becomes an instruction some future agent follows. Let the playbook hold that bar rather than writing a `SKILL.md` freehand.
+Writing a skill matches the [Authoring or modifying a skill playbook](../../skills/mode/playbooks/authoring-a-skill.md), which routes through your harness's skill-authoring flow when it has one, validates the frontmatter and links, and ships the result through the Opening a PR playbook. Agent-facing prose has a higher bar than human prose, because an unhelpful sentence becomes an instruction some future agent follows. Let the playbook hold that bar rather than writing a `SKILL.md` freehand.
 
 One special case is worth splitting out. A skill that drives your app and proves behavior should wrap the repo's own harness rather than restate it, so read [Verify and ship](./06-verify-and-ship.md#give-the-agent-a-harness-to-drive) first and build on [`/control-cli`](../../skills/control-cli/SKILL.md) or [`/control-ui`](../../skills/control-ui/SKILL.md).
 
@@ -46,10 +46,10 @@ Skills aren't the only prose you ship. For docs, RFCs, readmes, PR descriptions,
 A skill edit affects every future session, so test it like the experiment it is:
 
 ```text
-/poteto-mode run the eval playbook on this skill change. same task for both variants, candidates stay blind.
+/mode run the eval playbook on this skill change. same task for both variants, candidates stay blind.
 ```
 
-The [Eval playbook](../../skills/poteto-mode/playbooks/eval.md) is built around one failure mode, the observer effect. An agent that knows it's being evaluated behaves differently. So candidate agents get an organic-looking task in sanitized directories, never the words "eval" or "candidate", and never each other's existence. One judge scores all outputs under neutral labels, and chain-following gets graded from which files each candidate actually read, not from what it claims.
+The [Eval playbook](../../skills/mode/playbooks/eval.md) is built around one failure mode, the observer effect. An agent that knows it's being evaluated behaves differently. So candidate agents get an organic-looking task in sanitized directories, never the words "eval" or "candidate", and never each other's existence. One judge scores all outputs under neutral labels, and chain-following gets graded from which files each candidate actually read, not from what it claims.
 
 Read every output yourself before accepting the verdict. If you disagree with the judge, suspect the rubric before you suspect your judgment.
 

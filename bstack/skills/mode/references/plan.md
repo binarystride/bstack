@@ -1,6 +1,6 @@
 # Plan
 
-Produce a phased implementation plan grounded in the **Principles** section of the `poteto-mode` skill. The plan is the deliverable. Do not implement.
+Produce a phased implementation plan grounded in the **Principles** section of the `mode` skill. The plan is the deliverable. Do not implement.
 
 Open a todolist with one item per step below.
 
@@ -12,7 +12,7 @@ Plan when the change spans three or more files, introduces architecture, has com
 
 ## 1. Re-read principles
 
-Read the **Principles** section of the `poteto-mode` skill end to end, and the leaf `principle-*` skills it indexes. The principles govern every plan decision; cross-link them.
+Read the **Principles** section of the `mode` skill end to end, and the leaf `principle-*` skills it indexes. The principles govern every plan decision; cross-link them.
 
 ## 2. Scope and constraints
 
@@ -24,8 +24,8 @@ Resolve what is in scope vs explicitly out, technical or platform constraints, p
 
 Delegate codebase exploration (the **guard-the-context-window** principle skill).
 
-- Route to the `poteto-agent` subagent when your harness registers it. A general-purpose subagent is the fallback, and it must be told to read the `poteto-mode` SKILL.md in full first. Never use a built-in planning subagent; it ignores this skill.
-- Choose the model per role (fast code model, instruction-following model, judgment model) as defined in the poteto-mode SKILL.md, rather than letting every phase inherit the parent.
+- Route to the `mode-agent` subagent when your harness registers it. A general-purpose subagent is the fallback, and it must be told to read the `mode` SKILL.md in full first. Never use a built-in planning subagent; it ignores this skill.
+- Choose the model per role (fast code model, instruction-following model, judgment model) as defined in the mode SKILL.md, rather than letting every phase inherit the parent.
 
 Each explorer returns file pointers, conventions, dependencies, test infrastructure, and entry points. No inlined dumps.
 
@@ -92,7 +92,7 @@ For bug fixes, the loop is reproduce on the surface, fix, verify on the same sur
 
 ## 6. Implementation guidance
 
-In the overview, name which poteto-mode non-negotiables the implementer must apply, by name:
+In the overview, name which mode non-negotiables the implementer must apply, by name:
 
 - the **how** skill over each unfamiliar subsystem before changing it.
 - the **interrogate** skill for adversarial review on contested designs before shipping.
