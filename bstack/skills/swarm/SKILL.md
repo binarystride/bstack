@@ -27,7 +27,7 @@ Open a todolist with one entry per phase before launching anything.
 
 ## Phase B: Fan out
 
-Spawn all N workers in one message: general-purpose subagents, in the background if your harness supports it, on the chosen model. If your harness can run agents remotely, do that by default, and keep a worker local only when it needs something on the user's machine (a running app, local auth, a simulator, local transcripts).
+Spawn all N workers in one message: general-purpose subagents, in the background if your harness supports it, on the chosen model. If your harness can run agents remotely, do that by default, and keep a worker local only when it needs something on the user's machine (a running app, local auth, a simulator, files that exist only here).
 
 When a worker must start from a non-default pushed branch, pass `cloud_base_branch`.
 

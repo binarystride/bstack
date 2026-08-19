@@ -37,6 +37,8 @@ Write each entry the way you'd tell a teammate what you did. Plain words, concre
 
 Use the helper so rows stay well-formed: `scripts/log.sh <logfile> <phase> <decision> <why> <evidence> <result>`. It stamps `ts`, writes the header on first use, strips stray tabs/newlines, and prefixes any cell starting with `=`, `+`, `-`, or `@` with a single quote so a reviewer opening the log in a spreadsheet doesn't trigger formula execution. A bare `printf` appending a row works too, but mind those same bytes if cells come from generated or user-supplied text.
 
+Write the row when the decision happens, never in a batch at the end. On a long run your context gets compacted and the reasoning is gone; the log is what survives that, which is the entire reason it exists.
+
 Log decision points and checkpoints, not every action: a fork chosen, a unit completed with its verification result, a pivot or revert with its trigger, a blocker surfaced, a gate fixed. For loop runs, one row per iteration. Skip the trivial and self-evident.
 
 ## Where it lives
@@ -51,21 +53,30 @@ Commit it only when the work is ambitious enough that a reviewer needs the trail
 - Append-only. A wrong call gets a new row that supersedes it. Never edit or delete history.
 - Prefer evidence produced by committed scripts over hand-made one-offs, so a reviewer can re-run it (the **encode-lessons-in-structure** principle skill).
 
-## Audit the log before you hand back
+## Audit the log against the durable record
 
-At the end of the run, before handing back, check the log told the truth. Walk it against what you actually did:
+At the end of the run, before handing back, check the log told the truth.
 
-- Every row maps to a real action. Cut invented or aspirational entries.
-- Each row's evidence resolves and shows what the row claims.
-- A fork, pivot, or abandoned approach that shaped the work but isn't logged is a gap. Add it.
-- Drop padding. If nobody would audit a row, it doesn't earn its place.
+Audit it against what the run actually left behind, not against your memory of it. By the time a long run ends, the early decisions are outside your context, and a self-audit from memory rubber-stamps exactly the rows most likely to be wrong. The durable record is what you can still open: `git log` and `git diff` on the branches you touched, the commits and their contents, open PRs and their CI results, files on disk, and every artifact path a row points at.
+
+That is also why the `evidence` column is a pointer rather than prose. Auditing is resolving those pointers.
+
+- **Every row resolves.** Open each evidence pointer. A SHA that isn't in the history, a `file:line` that doesn't exist, a screenshot path with no file: the row is wrong or the work didn't happen. Cut it or correct it.
+- **Every pointer shows what the row claims.** A commit that exists but doesn't contain the change described is a worse failure than a missing one, because it reads as verified.
+- **The record has no unlogged forks.** Walk the commits and branches. A revert, an abandoned branch, or a reset with no matching row is a gap. Add the row from what the record shows.
+- **A row with no resolvable evidence is not a decision, it's a claim.** Either find the evidence or mark the result `unverified`. Never leave it looking proven.
+- **Drop padding.** If nobody would audit a row, it doesn't earn its place.
 
 ## Cross-model review of the trail
 
-Before handing back, you must spawn a subagent on a different model family from the one that did the work. Self-review is not a substitute; the point is fresh eyes you cannot bring yourself. The subagent reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky.
+Before handing back, you must spawn a subagent on a different model family from the one that did the work. Self-review is not a substitute; the point is fresh eyes you cannot bring yourself.
+
+Give it the log and the durable record: the log file path, the branches and commits the run produced, the PRs it opened, and the artifact paths the rows point at. Do not try to hand it your transcript. A subagent cannot read its parent's session in most harnesses, and the record is the stronger evidence anyway because it is what a human reviewer will also see.
+
+It flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky.
 
 - Decisions logged with weak or absent evidence.
-- Verification steps skipped or claimed without proof in the transcript.
+- Verification steps claimed in the log with nothing in the record that proves them.
 - Choices that look risky in hindsight (premature, scope-creeping, papering over a symptom).
 - Gaps the user would otherwise miss on a casual skim.
 
