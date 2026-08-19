@@ -1,0 +1,16 @@
+{
+  "name": "pstack",
+  "owner": {
+    "name": "Denis Pshenov"
+  },
+  "metadata": {
+    "description": "Portable build of pstack: rigorous agent workflows that run on any harness."
+  },
+  "plugins": [
+    {
+      "name": "pstack",
+      "source": "./pstack",
+      "description": "Rigorous agent workflows you can parallelize with confidence."
+    }
+  ]
+}
