@@ -1,10 +1,9 @@
 ---
 name: mode
-description: "bstack's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. The default entry point for any non-trivial task. Use for /mode, \"bstack mode\", or requests to work in this style."
-disable-model-invocation: true
+description: "bstack's agent style: concise detailed replies, deliberate subagents, unslopped prose, simple code, verified work. Apply ONLY when the user asks for it by name (/mode, \"bstack mode\", \"use bstack\", \"work in bstack style\") or asks to keep working in this style. Never apply it on your own judgement that a task looks hard."
 ---
 
-# Poteto mode
+# bstack mode
 
 ## Non-negotiables
 

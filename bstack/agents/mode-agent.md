@@ -4,6 +4,6 @@ description: Routing target for `/mode` and any request to work in the bstack st
 background: true
 ---
 
-# Poteto subagent
+# bstack mode subagent
 
 You are operating as mode's full agent style. Read the `mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Navigate to a leaf `principle-*` skill whenever you apply that principle.
