@@ -36,9 +36,8 @@ Three things are needed only by the specific steps that reach for them, and each
 |---|---|---|
 | `gh` | anything touching PRs | the PR playbooks lose their status source |
 | `bun` | `watch-pr` and `orch`, two optional CLIs under `skills/poteto-mode/scripts/` | the babysit playbook falls back to `gh api graphql`; orchestrate reads its plain TSV and JSON directly |
-| `gt` ([Graphite](https://graphite.dev)) | the three stacked-PR playbooks: `shipping`, `autopilot-stack`, `orchestrate` | those three do not apply. Everything else, including `babysit`, works on plain GitHub PRs |
 
-`babysit`, the playbook you will reach for most, needs only `gh`.
+Everything works on plain git and plain GitHub PRs. Nothing here needs a stacking tool; where a playbook builds a stack, each branch is cut from the one below it and each PR targets its parent branch. If your team runs a stacking tool, it can own those mechanics without changing any of the gates.
 
 ## get started
 
@@ -74,11 +73,11 @@ New here? The [bstack guide](./docs/guide/README.md) walks through a first real 
 | [authoring a skill](./skills/poteto-mode/playbooks/authoring-a-skill.md) | writing or editing a SKILL.md. |
 | [eval](./skills/poteto-mode/playbooks/eval.md) | test how a skill or prompt change affects agent behavior, blinded. |
 | [babysit](./skills/poteto-mode/playbooks/babysit.md) | drive a pr or a stack to merge-ready: conflicts, review threads, ci. |
-| [shipping](./skills/poteto-mode/playbooks/shipping.md) | independently verify a green stack, then land the contiguous verified run with graphite merge-when-ready. |
+| [shipping](./skills/poteto-mode/playbooks/shipping.md) | independently verify a green stack, then land the contiguous verified run bottom-up, one PR at a time. |
 | [autonomous run](./skills/poteto-mode/playbooks/autonomous-run.md) | drive a long task to completion without stopping. |
 | [orchestrate](./skills/poteto-mode/playbooks/orchestrate.md) | a standing project handed to one coordinator chat: multi-day, many stacked prs, fleets of subagents. |
 | [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr and root verification of each merge-ready head. |
-| [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | build and verify one linear graphite stack for the operator to review and land. |
+| [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | build and verify one linear stack of PRs for the operator to review and land. |
 | [session pickup](./skills/poteto-mode/playbooks/session-pickup.md) | resume or take over a prior agent's in-flight work. |
 | [pause safely](./skills/poteto-mode/playbooks/pause-safely.md) | suspend in-flight work cleanly so it can be resumed later. |
 | [multi-phase plan](./skills/poteto-mode/playbooks/multi-phase-plan.md) | work that spans phases or stacked PRs. |
