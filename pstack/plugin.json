@@ -4,5 +4,17 @@
   "version": "1.0.0",
   "description": "Rigorous agent workflows you can parallelize with confidence. Write less code, at higher quality. Portable across agent harnesses.",
   "license": "MIT",
-  "keywords": ["pstack", "workflow", "principles", "review", "planning", "subagents", "verification"]
+  "keywords": [
+    "pstack",
+    "workflow",
+    "principles",
+    "review",
+    "planning",
+    "subagents",
+    "verification"
+  ],
+  "author": {
+    "name": "Denis Pshenov",
+    "email": "denis@binarystride.com"
+  }
 }
