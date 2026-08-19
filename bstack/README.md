@@ -26,6 +26,20 @@ This directory is the plugin. The repo root above it is the marketplace.
 
 Nothing to configure after install. There is no setup step and no model config file, by design: the skills describe the model *role* they need, and your harness resolves it.
 
+## What it needs
+
+Nothing, to install. Every skill is markdown and works the moment the plugin loads.
+
+Three things are needed only by the specific steps that reach for them, and each one degrades to plain instructions when it is absent:
+
+| Tool | Needed by | Without it |
+|---|---|---|
+| `gh` | anything touching PRs | the PR playbooks lose their status source |
+| `bun` | `watch-pr` and `orch`, two optional CLIs under `skills/poteto-mode/scripts/` | the babysit playbook falls back to `gh api graphql`; orchestrate reads its plain TSV and JSON directly |
+| `gt` ([Graphite](https://graphite.dev)) | the three stacked-PR playbooks: `shipping`, `autopilot-stack`, `orchestrate` | those three do not apply. Everything else, including `babysit`, works on plain GitHub PRs |
+
+`babysit`, the playbook you will reach for most, needs only `gh`.
+
 ## get started
 
 Use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) whenever you're doing something that needs rigor. It reads your request, picks a playbook, and runs the other skills as the steps need them.
@@ -183,7 +197,7 @@ Everything here follows upstream's intent. The changes are about making that int
 - **Packaging.** Three manifests over one `skills/` tree: `plugin.json` (Agent Plugins v1), `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`.
 - **Models.** Slugs like `claude-fable-5-thinking-max` and `grok-4.6-fast-xhigh` are gone. Skills name the role and the diversity requirement instead.
 - **Paths.** Nothing constructs a transcript or skills path. Harnesses disagree on both the root and the directory naming, so the skills discover it and stop if they cannot.
-- **Vendor names.** No product is named as the thing to react to. PR review triage keys on "an automated reviewer", and the watcher's bot detector is a configurable list plus a shape match on the run marker in the comment body. Set `BSTACK_REVIEW_BOTS` to add yours.
+- **Vendor names.** No product is named as the thing to react to. PR review triage keys on "an automated reviewer", and the watcher detects bots three ways with no setup: a `[bot]` account suffix, a list of common hosted reviewers, and a shape match on the run marker automated reviewers stamp in the comment body.
 - **Built-ins.** References to one harness's `/loop`, `/babysit`, and `create-skill` became descriptions of what to do, with the fallback named so nobody is stuck.
 - **Vendored.** `deslop`, `control-cli`, and `control-ui` came from `cursor-team-kit`, because `poteto-mode` calls them and a plugin should not depend on a plugin you did not install. MIT, unmodified; see [LICENSE.cursor-team-kit](./LICENSE.cursor-team-kit).
 - **Dropped.** Anything whose job was reading your chat transcripts, because harnesses disagree on where those live and half of them do not key by workspace at all: `recall`, `reflect`, and the `LAST_CHAT` column of `worktree-audit.sh`. Also upstream's `setup-pstack` (wrote a Cursor-only rules file), `automate-me`, `create-verification-skill`, `maintain-verification-skill` (all wrote into `.cursor/skills/`), and the `benny` Slack automation pack (built on Cursor Automations).

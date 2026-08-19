@@ -8,6 +8,8 @@ See the [install section of the readme](../../README.md#install) for the command
 
 ## There is nothing to configure
 
+The plugin holds no state and reads no config file. Install it and it works. There is no setup command, no model mapping to write, and no environment variable to set.
+
 bstack never names a model. Skills ask for a model by the role it plays, and the agent maps the role to what it can actually reach in your session:
 
 - **Judgment model.** Your strongest reasoning tier. Prose, design, and the hardest changes.

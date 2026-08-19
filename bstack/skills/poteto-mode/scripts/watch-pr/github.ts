@@ -330,23 +330,21 @@ function parseComment(value: unknown): T.ReviewComment {
     createdAt: string(object.createdAt, "review comment.createdAt"),
   };
 }
-/**
- * Whether a review thread was opened by an automated reviewer rather than a person.
- * Set BSTACK_REVIEW_BOTS to a comma-separated list of author logins to match your
- * own bots; the built-in list covers the common hosted ones.
- */
+/** Whether a review thread was opened by an automated reviewer rather than a person. */
 function isReviewBot(comment: T.ReviewComment | null): boolean {
   if (comment === null) return false;
   const author = (comment.authorLogin ?? "").toLowerCase();
   if (author.endsWith("[bot]")) return true;
-  if (configuredReviewBots().some((name) => author.includes(name))) return true;
+  if (KNOWN_REVIEW_BOTS.some((name) => author.includes(name))) return true;
   // Hosted reviewers post under a plain account name, so the body's machine
   // marker is the only reliable tell for those.
   if (passKey(comment) !== null) return true;
   const body = comment.body.toLowerCase();
   return AUTOMATED_REVIEW_BODY_TOKENS.some((token) => body.includes(token));
 }
-const DEFAULT_REVIEW_BOTS = [
+// Hosted reviewers that post under a plain account name. Anything ending in
+// "[bot]", or carrying a run marker in the body, is caught without being listed.
+const KNOWN_REVIEW_BOTS = [
   "bugbot",
   "coderabbit",
   "codex",
@@ -360,13 +358,6 @@ const AUTOMATED_REVIEW_BODY_TOKENS = [
   "automated review",
   "pr review automation",
 ] as const;
-function configuredReviewBots(): readonly string[] {
-  const configured = (process.env.BSTACK_REVIEW_BOTS ?? "")
-    .split(",")
-    .map((name) => name.trim().toLowerCase())
-    .filter((name) => name.length > 0);
-  return configured.length > 0 ? configured : DEFAULT_REVIEW_BOTS;
-}
 function passKey(comment: T.ReviewComment | null): string | null {
   if (comment === null) return null;
   // Automated reviewers stamp a per-pass marker in the body. Vendors prefix it

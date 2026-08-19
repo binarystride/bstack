@@ -48,7 +48,7 @@ Spawn all explorers in a single message:
 - Model: your fastest capable model. Exploration is search and reading, not judgment, so spend the reasoning budget in the explainer instead.
 
 Each explorer gets the same base prompt from `references/explorer-prompt.md` plus a specific exploration angle naming its slice. Each explorer should:
-- Start broad: Glob for relevant directories, Grep for key types/interfaces/class names
+- Start broad: glob for relevant directories, grep for key types, interfaces, and class names
 - Follow the thread: from an entry point, trace the call chain (callers, callees, data flow, type definitions)
 - Read the actual code, don't guess from file names
 - Stop when it can describe the full path from input to output (or trigger to effect) without hand-waving any step
@@ -65,7 +65,7 @@ Spawn a single Task subagent that explores and explains in one pass:
 - A general-purpose subagent, read-only.
 - Model: your strongest judgment model. This one writes the explanation a human will act on.
 
-The agent does its own exploration (Glob, Grep, Read) and writes the explanation directly. Read `references/explainer-prompt.md` for the communication style and output format. Same structure, just no explorer findings as input.
+The agent does its own exploration (glob, grep, read) and writes the explanation directly. Read `references/explainer-prompt.md` for the communication style and output format. Same structure, just no explorer findings as input.
 
 Proceed to Step 4.
 

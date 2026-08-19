@@ -13,7 +13,7 @@ disable-model-invocation: true
 Remaining triggers:
 
 - Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
-- About to `AskQuestion` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. The ask is the slow path. A throwaway probe usually answers faster, and it hands the human a result to react to instead of a decision to make.
+- About to ask the user on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. The ask is the slow path. A throwaway probe usually answers faster, and it hands the human a result to react to instead of a decision to make.
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
 - Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
@@ -82,11 +82,11 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-**Use `subagent_type: "poteto-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). `/poteto-mode` and `poteto-agent` route through the same wrapper. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review; respect what the skill prescribes, don't override to `poteto-agent`.
+**Route any subagent you spawn inside a playbook step to `poteto-agent`** (code-writing delegates, ad-hoc helpers), when your harness registers named agents. Where it does not, spawn a general-purpose subagent and tell it to read this SKILL.md in full first; that read is the whole point of the wrapper. Routed workflow skills (`how`, `why`, `interrogate`, `swarm`, `arena`, `architect`) prescribe their own subagents for diverse-model review; respect what the skill says and do not override it to `poteto-agent`.
 
 **Defaults for every subagent you spawn.** Run it in the background when your harness supports that. Do not put it in a restricted mode that strips MCP access, because most of these roles need their tools. Pass file pointers, not inlined context.
 
-Pick the model by role, not by name. The role names below are the same ones the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`) use, so map them once to what this harness actually offers:
+Pick the model by role, not by name. The role names below are the same ones the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`) use, so map them once to what this harness actually offers:
 
 - **Judgment model.** Your strongest reasoning tier. Prose, design, and the hardest changes: cross-cutting design, gnarly concurrency, subtle algorithms, or any task where the intent is vague.
 - **Instruction-following model.** Your best at executing a precisely specified sequence of steps to the letter. Use it when the work is fully specified and the risk is drift, not difficulty.
