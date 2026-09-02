@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "bstack",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Rigorous agent workflows you can parallelize with confidence. Write less code, at higher quality. Portable across agent harnesses.",
   "license": "MIT",
   "keywords": [
