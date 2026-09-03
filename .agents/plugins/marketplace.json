@@ -1,0 +1,16 @@
+{
+  "name": "bstack",
+  "interface": {
+    "displayName": "bstack"
+  },
+  "plugins": [
+    {
+      "name": "bstack",
+      "source": {
+        "source": "local",
+        "path": "./bstack"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

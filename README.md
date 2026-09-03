@@ -21,6 +21,7 @@ A one-plugin marketplace holding [bstack](./bstack), rigorous agent workflows th
 ## Layout
 
 ```
+.agents/plugins/marketplace.json  Agent Plugins marketplace (Codex et al.)
 .claude-plugin/marketplace.json   Claude Code marketplace
 .cursor-plugin/marketplace.json   Cursor marketplace
 bstack/
