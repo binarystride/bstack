@@ -20,8 +20,13 @@ Verdict on line one: **archive** or **not yet**, plus the reason in under ten wo
 
 **Done.** At most five lines, one clause each. Enough to recognise the thread, never a recap. The user does not want to re-read the work.
 
-**Open.** One line per item: what it is, who owns it (`you` or `me`), and whether it blocks archiving. Sort blockers first. If the list is empty, say so in one line.
+**Open.** One line per item, owner first: `**you**` or `**agent**`, then a separator, then what it is, then whether it blocks. Owner first so the reader scans a column of owners instead of reading to the end of each line to find whose job it is. Sort blockers first. If the list is empty, say so in one line.
+
+```
+- **agent** · Update the ticket status to reflect the merge. Blocks archiving.
+- **you** · Decide whether the sibling repo needs the same bump. Not blocking.
+```
 
 Nothing else. No summary paragraph, no next-steps essay.
 
-If any open item is mine and takes one step, offer to do it now in a single line. Do not do it unasked, and never create a ticket or a PR without being told to.
+If any open item is the agent's and takes one step, offer to do it now in a single line. Do not do it unasked, and never create a ticket or a PR without being told to.
