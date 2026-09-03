@@ -22,20 +22,24 @@ To pin a role, say so in the prompt ("use opus for the judge"), or write one lin
 
 ## Give the agent a way to drive your app
 
-Most of bstack's verification steps assume the agent can exercise the real app. If your repo has a test or demo harness, agents will find and reuse it. If not, [`/control-cli`](../../skills/control-cli/SKILL.md) and [`/control-ui`](../../skills/control-ui/SKILL.md) build a temporary one from standard local tools: tmux or a PTY for CLIs and TUIs, Playwright or CDP for web, IDE, and Electron.
+Most of bstack's verification steps assume the agent can exercise the real app. If your repo has a test or demo harness, agents will find and reuse it. If not, expect the agent to build a throwaway one from standard local tools, and expect that to be slower and less reliable than the harness you could check in.
 
 A repo with a checked-in harness gets better results than one without, because the agent stops guessing how to launch and drive the thing. That is worth building once.
 
 ## Run your first task
 
-Pick something real but small, and describe it the way you'd describe it to a colleague:
+Pick something real but small, and start by understanding the code you're about to touch:
 
 ```text
-/mode add a --json flag to this command. text output stays byte-identical. verify both.
+/how does this command build its output? i want to add a --json flag without changing the text form.
 ```
 
-Watch the todo list. The first item is always "read the Principles section". The rest are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
+Then state the change and the finish condition in one prompt:
 
-From here you can type normal follow-ups without repeating `/mode`. Invoking it loads its rules into the conversation, and they stay there, so the agent keeps applying them. Re-invoke it when you start a genuinely different task, or say "new task" so it re-matches a playbook instead of continuing the old one.
+```text
+add a --json flag to this command. text output stays byte-identical. verify both.
+```
 
-Next: [Route work through `/mode`](./02-mode.md).
+Invoking a skill loads its rules into the conversation, and they stay there, so follow-ups keep applying them. You only re-invoke when you want a different pass.
+
+Next: [Understand the code](./02-understand.md).

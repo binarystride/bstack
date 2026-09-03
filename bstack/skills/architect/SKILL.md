@@ -10,7 +10,7 @@ Design before implementing. Sketch types, function signatures, class shapes, and
 
 ## Start
 
-Open a todolist with one entry per phase before starting. Autonomous mode without checkpoints needs the list to show phase position and keep phases from silently disappearing.
+Open a todolist with one entry per phase before starting. Running without a checkpoint needs the list to show phase position and keep phases from silently disappearing.
 
 1. Ground
 2. Sketch
@@ -28,25 +28,25 @@ Skip Phase A only when the work is genuinely greenfield with no surrounding syst
 
 ## Phase B: Sketch
 
-Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt. Each candidate produces a design package shaped per `references/rationale-template.md`: the caller's usage written first, then the type sketch, function signatures, module map, and prose rationale derived from it.
+Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the [**exhaust-the-design-space**](../principles/references/exhaust-the-design-space.md) principle made concrete. Whole-shape alternatives, not point fixes inside one shape.
 
-Use one runner per distinct model you can reach, up to four, preferring different vendors. Design divergence is what you are buying here.
+Each candidate follows [`references/runner-prompt.md`](references/runner-prompt.md) and produces a design package shaped per [`references/rationale-template.md`](references/rationale-template.md): the caller's usage written first, then the type sketch, function signatures, module map, and prose rationale derived from it.
 
-Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
+Where your harness has subagents, run one candidate per distinct model you can reach, up to four, preferring different vendors, each writing to its own directory. Design divergence is what you are buying. Without subagents, sketch the candidates yourself, one at a time, and write each one out in full before starting the next. A candidate you only imagined is a candidate you cannot compare.
 
 Screen every candidate against [`references/design-red-flags.md`](references/design-red-flags.md) before synthesis. Reject or revise shallow modules, information leakage, temporal decomposition, and pass-through methods.
 
 Compare viable candidates on interface depth. Prefer the design that hides more complexity behind a smaller, simpler public surface. A rich interface can keep call chains short by concentrating capability instead of scattering it across layers.
 
-Arena returns one synthesized design package. The synthesis decision populates the rationale's "Synthesis decision" section.
+Synthesize one design package. Pick as the base the candidate a future maintainer can extend most easily without breaking invariants, then fold in by hand what is worth keeping from the others; don't paste mechanically, the result has to stay coherent under one mental model. Record the base, the grafts, and what you rejected and why in the rationale's "Synthesis decision" section. When the candidates converge on the same shape, note the convergence and ship it; no graft is needed.
 
 ## Phase C: Agree (opt-in)
 
-Default: proceed directly to implementation with the synthesized design. No human checkpoint.
+Default: proceed directly to implementation with the synthesized design. No human checkpoint, per the [**never-block-on-the-human**](../principles/references/never-block-on-the-human.md) principle. The design is reversible and reviewable, so the human course-corrects on the diff rather than on a prompt.
 
 Opt in to a checkpoint when the invoker explicitly asks: "/architect with checkpoint," "stop and show me before implementing," or similar. Then surface the synthesized design and pause for sign-off.
 
-The synthesis can ship as its own commit either way. That's the "scaffold first" mode of the **foundational-thinking** principle skill; subsequent commits read as filling in bodies against a stable contract. Planned and scoped breakage during fill-in is fine, per the **outcome-oriented-execution** principle skill. For adversarial pressure on the design before implementing, run the **interrogate** skill on the synthesized sketch.
+The synthesis can ship as its own commit either way. That's the "scaffold first" mode of the [**foundational-thinking**](../principles/references/foundational-thinking.md) principle; subsequent commits read as filling in bodies against a stable contract. Planned and scoped breakage during fill-in is fine, per the [**outcome-oriented-execution**](../principles/references/outcome-oriented-execution.md) principle. For adversarial pressure on the design before implementing, run the **interrogate** skill on the synthesized sketch.
 
 If the human pushes back on the shape (in a checkpoint or after the fact), treat that as Phase A evidence. Re-ground and re-run Phase B before writing more code.
 
@@ -56,9 +56,13 @@ Replace `not implemented` bodies with code, pseudocode with logic. The synthesiz
 
 Deviations from the sketch are signal worth surfacing, not friction to absorb silently. If a function needs a parameter the sketch didn't anticipate, ask whether the sketch was wrong, the requirement was missed, or the implementation is overreaching. Surface it; don't bolt it on.
 
+When the sketch replaces an existing API, migrate its callers and delete the old one in the same wave, per the [**migrate-callers-then-delete-legacy-apis**](../principles/references/migrate-callers-then-delete-legacy-apis.md) principle. A compatibility layer kept alive only for internal callers is dual-path complexity the design did not ask for.
+
+A synthesized design earns no pass. Verify the filled-in code against the real artifact, per the [**prove-it-works**](../principles/references/prove-it-works.md) principle, and treat a delegate's summary of its own work as a claim rather than evidence.
+
 ## Phase E: Scrap when the architecture is wrong
 
-If implementation keeps producing friction the sketch can't absorb, throw the sketch out. Don't bolt fixes onto a wrong design, per the **redesign-from-first-principles** and **fix-root-causes** principle skills.
+If implementation keeps producing friction the sketch can't absorb, throw the sketch out. Don't bolt fixes onto a wrong design, per the **redesign-from-first-principles** and [**fix-root-causes**](../principles/references/fix-root-causes.md) principles.
 
 The signal is a *pattern*, not single instances. Tells:
 
@@ -75,8 +79,8 @@ When you scrap:
 
 1. Re-run the **how** skill over what's been built. The implementation lessons enter the new design as inputs, not vibes.
 2. Redesign as if the new constraints had been day-one assumptions, per redesign-from-first-principles.
-3. Subtract before adding, per the **subtract-before-you-add** principle skill. The new sketch should be smaller than the old one before it grows.
-4. Return to Phase B and re-run arena.
+3. Subtract before adding, per the [**subtract-before-you-add**](../principles/references/subtract-before-you-add.md) principle. The new sketch should be smaller than the old one before it grows.
+4. Return to Phase B and sketch again.
 
 ## Outputs
 

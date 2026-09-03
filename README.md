@@ -1,6 +1,6 @@
 # bstack marketplace
 
-A one-plugin marketplace holding [bstack](./bstack), a portable build of [poteto's pstack](https://github.com/cursor/plugins/tree/main/pstack) that runs on any agent harness.
+A one-plugin marketplace holding [bstack](./bstack), rigorous agent workflows that run on any agent harness.
 
 ## Install
 
@@ -27,13 +27,13 @@ bstack/
   plugin.json                     Agent Plugins v1 manifest
   .claude-plugin/plugin.json      Claude Code manifest
   .cursor-plugin/plugin.json      Cursor manifest
-  skills/                         43 skills, shared by all three
-  agents/                         2 subagents (Claude Code and Cursor only)
+  skills/                         12 skills (one holds the 19 principles)
+  agents/                         3 review subagents (Claude Code only)
   docs/guide/                     the walkthrough
 ```
 
-One `skills/` tree, three manifests. The Agent Plugins spec covers skills and MCP servers only, so the two subagents need the per-harness manifests. Nothing breaks without them; see the plugin [readme](./bstack/README.md#subagents).
+One `skills/` tree, three manifests. The Agent Plugins spec covers skills and MCP servers only, so the subagents load only where the harness reads an `agents/` directory. Nothing breaks without them; see the plugin [readme](./bstack/README.md#subagents).
 
 ## License
 
-MIT. Upstream pstack and the three vendored `cursor-team-kit` skills are MIT, Copyright (c) 2026 Cursor.
+Private. All rights reserved.
