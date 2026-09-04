@@ -61,6 +61,7 @@ Invoke the one that matches the step you're on. Nothing routes for you, and noth
 | [`/architect`](./skills/architect/SKILL.md) | you're about to write code that crosses a function boundary and want the caller's usage, types, and module shape settled first. |
 | [`/review`](./skills/review/SKILL.md) | you're about to push and want the change reviewed by passes that never saw your reasoning, each candidate finding verified before it reaches you. |
 | [`/interrogate`](./skills/interrogate/SKILL.md) | you have a diff and want several different models to try to break it, including a strict code-quality lens. |
+| [`/walk-me`](./skills/walk-me/SKILL.md) | you have a list of findings and want them one at a time: short explanation, recommended fix, your decision, then the change. |
 | [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
 | [`/unslop`](./skills/unslop/SKILL.md) | you're cleaning up writing. removes AI tells. |
 | [`/technical-writing`](./skills/technical-writing/SKILL.md) | layered doc standard (Diátaxis + Google developer style + STE + Global English) for docs, RFCs, readmes, PR descriptions, commit messages. |
