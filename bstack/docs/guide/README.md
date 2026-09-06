@@ -5,7 +5,7 @@ bstack works best when you stop micromanaging the agent. You describe what you w
 Here's what you'll learn:
 
 1. [Set up bstack](./01-setup.md). Install the plugin and pick your models.
-2. [Understand the code](./02-understand.md). `/how`, `/why`, and `/teach` before you edit anything.
+2. [Understand the code](./02-understand.md). `/how` and `/teach` before you edit anything.
 3. [Design the change](./03-design.md). `/architect` and `/interrogate` before code locks in a shape.
 4. [Review and ship](./04-review-and-ship.md). Prove behavior on the real app, then open a focused PR.
 5. [Steer with principle names](./05-principles.md). The 19 names that redirect an agent mid-task.

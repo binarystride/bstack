@@ -8,7 +8,7 @@ One attempt at a hard design locks in the first shape the model thought of. `/ar
 /architect design the import pipeline before writing any code. i care most about how callers use it.
 ```
 
-[`/architect`](../../skills/architect/SKILL.md) grounds itself first, running `/how` over the code the design touches and `/why` when it moves ownership or layers. Then it sketches the design at least twice, with the caller's usage written first in each, followed by types, signatures, and a module map. It picks one sketch as the base, folds in what's worth keeping from the others, and records what it rejected and why.
+[`/architect`](../../skills/architect/SKILL.md) grounds itself first, running `/how` over the code the design touches and checking relevant documented rationale when it moves ownership or layers. Then it sketches the design at least twice, with the caller's usage written first in each, followed by types, signatures, and a module map. It picks one sketch as the base, folds in what's worth keeping from the others, and records what it rejected and why.
 
 ```mermaid
 flowchart LR

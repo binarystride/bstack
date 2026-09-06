@@ -197,16 +197,19 @@ it. `not valid` when the claim does not hold against the current files. `still o
 otherwise. A commit message claiming a fix is not evidence, the files are. A fix that
 moved the problem is `still open`, with a note on where it went.
 
-The new commits are code nobody has reviewed. They get the full set of angles. Do not
-re-derive the parts they did not touch.
+The new commits are code nobody has reviewed. They get the selected set of angles, not an automatic expansion to `--full`. Do not
+re-derive the parts they did not touch. Review the entire original change again only
+when the user explicitly requests it.
 
-If the earlier findings are no longer available to you, say so and run a full review
-instead. A re-review that invents its own history is worse than a fresh one.
+If the earlier findings or reviewed base are missing, try to recover the recorded review
+first. If they remain unavailable, report the gap and ask for the missing baseline or
+an explicit full review. Do not silently broaden the scope.
 
 ## Fix mode
 
-With `--fix`, alternate reviewing and fixing instead of stopping at a report. Each round
-is a full review of the current state, followed by fixes for what it found.
+With `--fix`, alternate reviewing and fixing instead of stopping at a report. The first round
+reviews the requested scope. Later rounds review the fixes and prior findings under
+the re-review rules above, followed by fixes for what they found.
 
 **Stop when any of these is true, and say which one ended the loop:**
 

@@ -34,7 +34,7 @@ One external tool gets used, and only by the steps that reach for it:
 
 | Tool | Needed by | Without it |
 |---|---|---|
-| `gh` | `/why` and `/done`, when they read PRs and issues | those steps lose their PR and issue evidence |
+| `gh` | `/done`, when they read PRs and issues | those steps lose their PR and issue evidence |
 
 Everything else works on plain git.
 
@@ -56,8 +56,7 @@ Invoke the one that matches the step you're on. Nothing routes for you, and noth
 | skill | use it when |
 |---|---|
 | [`/how`](./skills/how/SKILL.md) | you want a walkthrough of how a subsystem works. |
-| [`/why`](./skills/why/SKILL.md) | you want to know why something was built this way. discovers the MCP servers you can actually reach at run time and queries each evidence category in parallel (source control, issue tracker, long-form docs, real-time chat, infra observability, error tracking, analytics warehouse). |
-| [`/teach`](./skills/teach/SKILL.md) | you want to actually understand a change or subsystem, not just have it summarized. runs how + why and weaves one plain explanation, built up diagram by diagram. |
+| [`/teach`](./skills/teach/SKILL.md) | you want to actually understand a change or subsystem, not just have it summarized. uses how to ground one plain explanation, built up diagram by diagram. |
 | [`/architect`](./skills/architect/SKILL.md) | you're about to write code that crosses a function boundary and want the caller's usage, types, and module shape settled first. |
 | [`/review`](./skills/review/SKILL.md) | you're about to push and want the change reviewed by passes that never saw your reasoning, each candidate finding verified before it reaches you. |
 | [`/interrogate`](./skills/interrogate/SKILL.md) | you have a diff and want several different models to try to break it, including a strict code-quality lens. |

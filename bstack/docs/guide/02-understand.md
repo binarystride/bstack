@@ -1,6 +1,6 @@
 # Understand the code before changing it
 
-Editing code you don't understand is how subtle regressions ship. bstack gives you three ways in. `/how` explains what the code does now. `/why` digs up the reasons it's shaped that way. `/teach` blends both into one explanation.
+Editing code you don't understand is how subtle regressions ship. bstack gives you two ways in. `/how` explains what the code does now. `/teach` builds that understanding into a plain explanation.
 
 ## Trace behavior with `/how`
 
@@ -18,23 +18,13 @@ Ask the question you actually have. [`/how`](../../skills/how/SKILL.md) reads th
 
 The explanation comes first, so the critique stays grounded in how the thing really works.
 
-## Dig up history with `/why`
-
-```text
-/why was the retry limit set to five? does the reason still hold?
-```
-
-[`/why`](../../skills/why/SKILL.md) works like a detective on a cold case. It starts from source control, then queries whatever evidence categories your MCPs expose, such as the issue tracker, long-form docs, team chat, observability, error tracking, and analytics, all in parallel. The report cites everything, separates direct evidence from inference, and says "appears to" when the record is thin. A null result gets reported too, because "nobody wrote down why" is itself an answer.
-
-The two compose naturally. `do why first then how` is a perfectly good prompt when you suspect the history explains the mess.
-
 ## Actually understand it with `/teach`
 
 ```text
 /teach me how this PR changes retries. convince me it fixes the cause and not the symptom.
 ```
 
-[`/teach`](../../skills/teach/SKILL.md) is for when a summary isn't enough. It runs `/how` and `/why`, for a small change maybe just one of them, and weaves the findings into a plain explanation that builds up diagram by diagram. The "convince me" framing is worth stealing. It turns the explanation into an argument you can poke at instead of a tour.
+[`/teach`](../../skills/teach/SKILL.md) is for when a summary isn't enough. It uses `/how` and weaves the findings into a plain explanation that builds up diagram by diagram. The "convince me" framing is worth stealing. It turns the explanation into an argument you can poke at instead of a tour.
 
 **Pitfall:** don't skip this page's skills because "the agent will read the code anyway." An agent that starts editing without a traced model tends to fix the symptom at the first plausible spot. `/how` first is cheaper than the second bug.
 

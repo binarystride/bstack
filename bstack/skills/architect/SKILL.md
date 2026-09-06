@@ -22,7 +22,7 @@ Open a todolist with one entry per phase before starting. Running without a chec
 
 Build a real mental model of every system the new code touches. Run the **how** skill over the relevant subsystems. Critique mode if existing structure is the constraint or the design must push back on it.
 
-Naming a file isn't grounding. Produce the traced model `how` prescribes. If the design redefines ownership or layering, also run the **why** skill on the existing shape so the rationale becomes a constraint, not a guess.
+Naming a file isn't grounding. Produce the traced model `how` prescribes. If the design redefines ownership or layering, check the relevant existing rationale in project documentation or source history. Distinguish documented constraints from inference; keep the lookup scoped to the design question.
 
 Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.
 

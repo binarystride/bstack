@@ -28,7 +28,7 @@ bstack/
   plugin.json                     Agent Plugins v1 manifest
   .claude-plugin/plugin.json      Claude Code manifest
   .cursor-plugin/plugin.json      Cursor manifest
-  skills/                         13 skills (one holds the 19 principles)
+  skills/                         12 skills (one holds the 19 principles)
   agents/                         3 review subagents (Claude Code only)
   docs/guide/                     the walkthrough
 ```
