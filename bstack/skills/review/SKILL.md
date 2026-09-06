@@ -1,11 +1,43 @@
 ---
 name: review
-description: Review the current change with fresh-context reviewers before pushing. Runs independent finder angles, verifies each candidate, and reports graded findings. Runs the correctness angles by default; flags -- --full for every angle, --low/--med/--high to set the depth tier, --fix to alternate reviewing and fixing until nothing above P3 remains, --base to set the diff base. Use when the user asks to review, self-review, double-check, or sanity-check work before opening a PR, and when re-checking after applying review findings.
+description: Run a structured, fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or asks for a self-review before pushing. Do not use merely to implement or fix code, push or ship changes, open or update a PR, or answer feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
 metadata:
   version: '2.3.0'
 ---
 
 # Review
+
+## Invocation boundary
+
+This is a heavyweight, multi-pass code review. Invoke it implicitly only when both
+conditions hold:
+
+1. The target is a concrete code change, diff, commit, branch, or pull request.
+2. The user explicitly asks for that code to be reviewed for defects.
+
+Requests such as "review PR 514", "check this diff for bugs", "self-review my changes
+before I push", and "sanity-check the code in this branch" qualify. An explicit request
+to run this skill also invokes the workflow. Merely quoting, discussing, or editing the
+skill is not a request to run it. "Self-review my changes before I push" is an explicit
+review request, not a standing instruction to review before every push.
+
+Do not start this workflow solely because implementation, a fix, a push, or a PR
+operation is underway. An explicit review request can start it at any stage. When the
+user requests `--fix`, follow the review-and-fix loop below.
+
+Questions such as "is this feature ready?", "did we implement this?", "did we miss
+anything?", "is this correctly implemented?", or "verify these release notes" do not
+qualify on their own, even when answering requires reading code. Investigate ambiguous
+product or operational status questions directly first, with a time-boxed scope.
+
+If neither the two-condition rule nor an explicit request to run this skill applies,
+do not follow the review workflow below. Continue the requested task with proportionate
+in-session verification. For implementation work, inspect the diff, run focused tests
+or typechecks, and check the requested behavior. Once the task is complete, you may offer
+comprehensive review as an optional next step when useful.
+
+The re-review instructions apply when the user requests another review or has requested
+the `--fix` loop. They do not automatically start another review after ordinary fixes.
 
 The session that wrote the code cannot review it. It still holds the plan and the
 reasoning, so it reads the change as what it meant instead of what it says. That is why
