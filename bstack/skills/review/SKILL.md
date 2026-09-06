@@ -1,11 +1,29 @@
 ---
 name: review
-description: Review the current change with fresh-context reviewers before pushing. Runs independent finder angles, verifies each candidate, and reports graded findings. Runs the correctness angles by default; flags -- --full for every angle, --low/--med/--high to set the depth tier, --fix to alternate reviewing and fixing until nothing above P3 remains, --base to set the diff base. Use when the user asks to review, self-review, double-check, or sanity-check work before opening a PR, and when re-checking after applying review findings.
+description: Run a structured, fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or self-review changes before pushing. Do not use for feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
 metadata:
   version: '2.3.0'
 ---
 
 # Review
+
+## Invocation boundary
+
+This is a heavyweight, multi-pass code review. Invoke it implicitly only when both
+conditions hold:
+
+1. The target is a concrete code change, diff, commit, branch, or pull request.
+2. The user wants that code reviewed for defects.
+
+Requests such as "review PR 514", "check this diff for bugs", "self-review my changes
+before I push", and "sanity-check the code in this branch" qualify. An explicit
+`$bstack:review` also invokes this workflow.
+
+Questions such as "is this feature ready?", "did we implement this?", "did we miss
+anything?", "is this correctly implemented?", or "verify these release notes" do not
+qualify on their own, even when answering requires reading code. Investigate ambiguous
+product or operational status questions directly first, with a time-boxed scope. Offer
+this comprehensive code review as an optional next step instead of starting it.
 
 The session that wrote the code cannot review it. It still holds the plan and the
 reasoning, so it reads the change as what it meant instead of what it says. That is why
