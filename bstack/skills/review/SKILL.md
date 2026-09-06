@@ -1,6 +1,6 @@
 ---
 name: review
-description: Run a structured, fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or self-review changes before pushing. Do not use for feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
+description: Run a structured, fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or asks for a self-review before pushing. Do not use merely to implement or fix code, push or ship changes, open or update a PR, or answer feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
 metadata:
   version: '2.3.0'
 ---
@@ -13,11 +13,19 @@ This is a heavyweight, multi-pass code review. Invoke it implicitly only when bo
 conditions hold:
 
 1. The target is a concrete code change, diff, commit, branch, or pull request.
-2. The user wants that code reviewed for defects.
+2. The user explicitly asks for that code to be reviewed for defects.
 
 Requests such as "review PR 514", "check this diff for bugs", "self-review my changes
 before I push", and "sanity-check the code in this branch" qualify. An explicit
-`$bstack:review` also invokes this workflow.
+`$bstack:review` also invokes this workflow. "Self-review my changes before I push"
+is an explicit review request, not a standing instruction to review before every push.
+
+Requests to implement a fix, continue implementation, push or ship changes, or open or
+update a PR do not invoke this workflow. For ordinary implementation work, inspect the
+diff, run focused tests or typechecks, and check the requested behavior in-session.
+Do not run this workflow during implementation, after every fix, or merely because a
+push or PR is requested. Once the change is ready, offer comprehensive review as an
+optional next step.
 
 Questions such as "is this feature ready?", "did we implement this?", "did we miss
 anything?", "is this correctly implemented?", or "verify these release notes" do not
