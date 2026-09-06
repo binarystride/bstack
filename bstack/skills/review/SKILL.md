@@ -34,6 +34,10 @@ context, read files, and run `git`. Anything that can do that can run this revie
 
 Nothing below depends on a particular tool name.
 
+Review requests report findings. Implement changes only when the user requests fixes,
+including `--fix`. Optional cleanup and speculative improvements remain suggestions
+unless the user explicitly accepts them.
+
 ## Flags
 
 - `--full` runs every angle. Without it the review runs angles A, B, C and I only: the
