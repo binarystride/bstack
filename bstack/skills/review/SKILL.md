@@ -16,22 +16,28 @@ conditions hold:
 2. The user explicitly asks for that code to be reviewed for defects.
 
 Requests such as "review PR 514", "check this diff for bugs", "self-review my changes
-before I push", and "sanity-check the code in this branch" qualify. An explicit
-`$bstack:review` also invokes this workflow. "Self-review my changes before I push"
-is an explicit review request, not a standing instruction to review before every push.
+before I push", and "sanity-check the code in this branch" qualify. An explicit request
+to run this skill also invokes the workflow. Merely quoting, discussing, or editing the
+skill is not a request to run it. "Self-review my changes before I push" is an explicit
+review request, not a standing instruction to review before every push.
 
-Requests to implement a fix, continue implementation, push or ship changes, or open or
-update a PR do not invoke this workflow. For ordinary implementation work, inspect the
-diff, run focused tests or typechecks, and check the requested behavior in-session.
-Do not run this workflow during implementation, after every fix, or merely because a
-push or PR is requested. Once the change is ready, offer comprehensive review as an
-optional next step.
+Do not start this workflow solely because implementation, a fix, a push, or a PR
+operation is underway. An explicit review request can start it at any stage. When the
+user requests `--fix`, follow the review-and-fix loop below.
 
 Questions such as "is this feature ready?", "did we implement this?", "did we miss
 anything?", "is this correctly implemented?", or "verify these release notes" do not
 qualify on their own, even when answering requires reading code. Investigate ambiguous
-product or operational status questions directly first, with a time-boxed scope. Offer
-this comprehensive code review as an optional next step instead of starting it.
+product or operational status questions directly first, with a time-boxed scope.
+
+If neither the two-condition rule nor an explicit request to run this skill applies,
+do not follow the review workflow below. Continue the requested task with proportionate
+in-session verification. For implementation work, inspect the diff, run focused tests
+or typechecks, and check the requested behavior. Once the task is complete, you may offer
+comprehensive review as an optional next step when useful.
+
+The re-review instructions apply when the user requests another review or has requested
+the `--fix` loop. They do not automatically start another review after ordinary fixes.
 
 The session that wrote the code cannot review it. It still holds the plan and the
 reasoning, so it reads the change as what it meant instead of what it says. That is why
