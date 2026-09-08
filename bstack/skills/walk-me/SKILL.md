@@ -44,6 +44,17 @@ Number the items and any options inside them, so "option 2" is unambiguous later
 
 End with a direct question: go ahead, pick an option, or skip.
 
+Then the progress line, always the last line of the message:
+
+`Progress: ✓ ✓ ✗ **P2** [P3] [P3]`
+
+- `✓` fixed, `✗` skipped or left as-is.
+- Undecided items show their severity. A grouped item takes the highest severity in the group.
+- `[ ]` around an item you recommend leaving. Drop the brackets once it is decided.
+- Bold the item on the table now.
+
+Items stay in presentation order, so the line reads left to right as done, current, remaining.
+
 ## Items that need no fix
 
 Say so plainly and give the one reason. A reported problem that is wrong, already handled elsewhere, or too rare to be worth the code is a valid outcome. Recommend leaving it, and ask the user to confirm.
@@ -64,10 +75,14 @@ Report the result in one line before moving to the next item.
 
 ## When every item is done
 
-Give the recap. One line per item, nothing else:
+Give the recap:
 
-`3. Stale reprice reverts the booking — fixed, guard in the shared reprice path.`
-`4. Missing pieces on legacy offers — deferred, needs a prod count first.`
+1. The finished progress line: `Progress: ✓ ✓ ✗ ✓ ✗ ✗`.
+2. One line per item: number, severity, short title, outcome, and the one fact that explains the outcome. Where a deferral was recorded, say where.
+
+`1. P1 Stale reprice reverts the booking — fixed, guard in the shared reprice path.`
+`3. P2 Duplicate webhook delivery — deferred, needs a prod count first. Recorded in DEFERRED.md.`
+`5. [P3] Retry on 429 — left, too rare to be worth the code.`
 
 Then offer to commit and push, following the project's own conventions. Work out what applies here: the commit message format, the formatting step, the branch, whether a PR exists and whether its description needs updating. If the findings came from PR review threads, offer to resolve those threads after pushing.
 
