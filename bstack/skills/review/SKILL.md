@@ -2,7 +2,7 @@
 name: review
 description: Run a structured, fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or asks for a self-review before pushing. Do not use merely to implement or fix code, push or ship changes, open or update a PR, or answer feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
 metadata:
-  version: '2.3.2'
+  version: '2.4.0'
 ---
 
 # Review
@@ -72,9 +72,9 @@ unless the user explicitly accepts them.
 
 ## Flags
 
-- `--full` runs every angle. Without it the review runs angles A, B, C and I only: the
-  three correctness angles plus conventions. That is the default, and it costs you the
-  surfaces, cleanup, altitude and tests angles.
+- `--full` runs every angle. Without it the review runs angles A, B, C and H only: the
+  three correctness angles plus altitude. That is the default, and it costs you the
+  surfaces, cleanup, conventions and tests angles.
 - `--low`, `--med`, `--high` set the depth tier. `--med` is the default.
 - `--fix` alternates reviewing and fixing, described below. `--fix N` sets the round limit.
 - `--base <ref>` overrides the base the diff is taken against.
@@ -216,6 +216,12 @@ Two rules that matter more than the list:
 - Never lower a grade because you are unsure the trigger is reachable. Reachability was
   the verifier's job, and it either refuted the finding or it did not.
 
+Before the findings, look at every P0 to P2 finding together. When two or more stem from
+one design choice, open the report with a **Root cause** paragraph: name the choice, list
+the findings it produces, and name the alternative mechanism that makes that class of
+defect impossible. Fixing the findings one by one inside the same design is how a review
+turns into three rounds of patches. When no such group exists, omit the paragraph.
+
 Report findings most severe first, as ordinary chat markdown. A finding is prose to read,
 not a block to copy, and it has four parts in this order:
 
@@ -270,8 +276,10 @@ the re-review rules above, followed by fixes for what they found.
   is not landing, and a third will not help.
 
 **Oscillation.** If a finding reappears at a file and line an earlier round already fixed,
-stop immediately and report both rounds' versions together. A fix that re-creates an
-earlier finding is a design problem, not something another round resolves.
+or a round returns a `regression` in a file the previous round's fix touched, stop
+immediately and report both rounds' findings together, with the root cause paragraph. A
+fix that creates the next finding is a design problem, not something another round
+resolves; re-plan the mechanism before fixing anything else.
 
 **Applying a fix.** Fix the cause named in the failure scenario, not the symptom. Never
 silence a finding by deleting or weakening a test, widening a type, or adding a guard that
@@ -340,9 +348,12 @@ simpler form that does the same job.
 independent operations run in sequence, work added to a startup or hot path, long-lived
 objects capturing a whole scope. Name the cheaper alternative.
 
-**H. Altitude.** Check that each change sits at the right depth. Special cases layered on
-top of shared machinery usually mean the fix is not deep enough. Prefer generalising the
-mechanism to adding another special case.
+**H. Altitude.** Check that each change sits at the right depth. A special case layered on
+top of shared machinery usually means the fix covers only the path that was being worked
+on. For each one, find the sibling path the special case misses: the other caller, the
+other supplier, the other surface that goes through the same machinery. That missed path
+is the failure scenario; a special case with no missed path is not a candidate. Prefer
+generalising the mechanism to adding another special case.
 
 **I. Conventions.** Find the documents that govern the changed files: the repository's
 agent or contributor instructions at the root, any equivalent file in a directory above a

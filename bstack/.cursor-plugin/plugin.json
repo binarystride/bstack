@@ -1,7 +1,7 @@
 {
   "name": "bstack",
   "displayName": "bstack",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "Rigorous agent workflows for coding agents. Fewer lines of code, at higher quality, with the evidence attached. Portable across agent harnesses.",
   "license": "UNLICENSED",
   "keywords": [
