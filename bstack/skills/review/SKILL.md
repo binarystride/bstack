@@ -2,7 +2,7 @@
 name: review
 description: Run a structured, fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or asks for a self-review before pushing. Do not use merely to implement or fix code, push or ship changes, open or update a PR, or answer feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
 metadata:
-  version: '2.3.1'
+  version: '2.3.2'
 ---
 
 # Review
@@ -169,11 +169,17 @@ Each returns exactly one verdict:
 - **CONFIRMED** when the failure scenario holds against the code.
 - **PLAUSIBLE** otherwise.
 
-Each verifier also returns the finding's **origin**: `new` when the diff adds or changes
-the line that fails, `pre-existing` when that line is unchanged from the base (check with
-`git show <base>:<path>`). A defect in an unchanged line of a changed function, in a
-caller, or in a consumer is usually pre-existing. Origin never changes the verdict or the
-grade; it tells the reader whether the change caused the defect or merely sits next to it.
+Each verifier also returns the finding's **origin**, decided in this order:
+
+- `existing` when the failing line is unchanged from the base (check with
+  `git show <base>:<path>`). A defect in an unchanged line of a changed function, in a
+  caller, or in a consumer is usually existing.
+- `regression` when the diff removed or changed a line that used to handle the case, so
+  behaviour that worked on the base now fails.
+- `new code` otherwise: a defect in code this change adds, where nothing used to work.
+
+Origin never changes the verdict or the grade; it tells the reader whether the change
+caused the defect or merely sits next to it.
 
 Keep CONFIRMED and PLAUSIBLE. Drop REFUTED. Do not refute something for being
 speculative or for depending on runtime state, when the state is realistic: races, a rare
@@ -214,7 +220,7 @@ Report findings most severe first, as ordinary chat markdown. A finding is prose
 not a block to copy, and it has four parts in this order:
 
 1. A bold heading holding the grade, the `path:line` as inline code, and the category,
-   verdict and origin in brackets, for example `[correctness · CONFIRMED · pre-existing]`.
+   verdict and origin in brackets, for example `[correctness · CONFIRMED · regression]`.
 2. One short paragraph saying what is wrong and the concrete fix.
 3. A line beginning `Failure:` giving the inputs or state and the wrong outcome.
 4. The source lines you actually read, in a fenced code block.
@@ -223,7 +229,8 @@ Part 4 is the only fenced block a finding may contain. Never wrap a whole findin
 fence, because that renders as a copy-paste block instead of readable text. Never
 hard-wrap your prose at a fixed column either, because the client wraps it for the reader.
 
-Then one verdict line. Then, on its own line, `Reviewed at <sha>`.
+Then one verdict line with the origin counts, such as `1 regression, 1 new, 1 existing`.
+Then, on its own line, `Reviewed at <sha>`.
 
 If you cut anything, say so and say how many. Silent truncation reads as "that was
 everything". Zero findings is a good outcome, and worth saying plainly.
@@ -269,9 +276,9 @@ earlier finding is a design problem, not something another round resolves.
 **Applying a fix.** Fix the cause named in the failure scenario, not the symptom. Never
 silence a finding by deleting or weakening a test, widening a type, or adding a guard that
 hides the state instead of handling it. If the correct fix is larger than this change
-should carry, record the finding as `skipped` with the reason. A pre-existing defect the
+should carry, record the finding as `skipped` with the reason. An existing defect the
 change did not touch is a valid reason to skip, but say so; it is not a reason to omit
-the finding. If you believe a finding is
+the finding. Never skip a regression. If you believe a finding is
 wrong, record it as `not valid` with the evidence. You may decline any finding, and you
 may never make one disappear without a record.
 
