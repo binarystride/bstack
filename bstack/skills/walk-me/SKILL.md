@@ -13,7 +13,7 @@ The findings usually come from the **review** or **interrogate** skill. Where `/
 
 Read the findings and the code they point at. If a finding is vague, verify it yourself before presenting it. Never present a finding you have not checked.
 
-Then decide the order and the grouping:
+Then decide the order and the grouping. When two or more items stem from one design choice, say so in the opening line and present that choice as its own first item, because deciding it changes the answer for the rest.
 
 - Group problems that block each other, share a root cause, or where fixing one changes the answer for another. Present the group as one item with one decision.
 - Order by dependency first, then by severity.
@@ -69,6 +69,7 @@ Never invent confidence to fill the gap.
 ## After the user decides
 
 - **Fix it now.** Make the smallest change that fixes the root cause. Then run the narrowest check the project already has for that code: the one test file, the type check. Not the full suite.
+- **Stop patching when the fixes chase each other.** If an item is a `regression` caused by a fix made earlier in this walk or in the previous review round, do not fix it in place. Say which fix caused it, name the design choice both fixes are working around, and propose the mechanism that removes the class of defect. Ask the user to choose between re-planning and continuing to patch before touching anything.
 - **Defer it.** Record the decision if it is durable, meaning a future session would otherwise re-litigate it: a rejected approach, a deliberate gap, a rule. Write it wherever this project keeps durable decisions, and if it keeps none, say so and put it in the reply. Skip this for routine fixes; the diff records those.
 - **Leave it.** Say it is closed and move on.
 
