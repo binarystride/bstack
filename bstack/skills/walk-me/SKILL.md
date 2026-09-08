@@ -37,7 +37,7 @@ Keep the whole thing under about 150 words. Hard limits:
 - What goes wrong: one or two sentences, in plain language. Lead with the consequence for the customer where there is one, otherwise for the system.
 - Why it matters: one sentence. Say honestly how bad it is and how often it happens. If you do not know how often, say so.
 - Where: file and line, function name, or the exact error text. Enough to look at it, nothing more.
-- Origin: one of `new in this change` or `already on the base branch`. Fixing a regression is rarely optional; fixing an old defect is a scope decision. If the findings do not say, check whether the failing line is in the diff against the base before presenting the item.
+- Origin: `regression` when the change broke behaviour that worked on the base, `new` when the defect is in code the change adds, `existing` when the failing line is unchanged from the base. A regression is never optional; an existing defect is a scope decision. If the findings do not say, check the diff against the base before presenting the item.
 - The fix: one or two sentences.
 - Alternatives: only if there is a real choice to make. One line each, at most two of them, and say which you recommend and why. If one fix is obviously right, propose nothing else.
 
@@ -81,9 +81,9 @@ Give the recap:
 1. The finished progress line: `Progress: ✓ ✓ ✗ ✓ ✗ ✗`.
 2. One line per item: number, severity, short title, origin, outcome, and the one fact that explains the outcome. Where a deferral was recorded, say where.
 
-`1. P1 Stale reprice reverts the booking — new — fixed, guard in the shared reprice path.`
-`3. P2 Duplicate webhook delivery — pre-existing — deferred, needs a prod count first. Recorded in DEFERRED.md.`
-`5. [P3] Retry on 429 — pre-existing — left, too rare to be worth the code.`
+`1. P1 Stale reprice reverts the booking — regression — fixed, early return restored.`
+`2. P2 Refund event throws in webhook — new — fixed, branch on event type.`
+`3. [P3] Zero pieces shown as included — existing — deferred, needs a prod count first. Recorded in DEFERRED.md.`
 
 Then offer to commit and push, following the project's own conventions. Work out what applies here: the commit message format, the formatting step, the branch, whether a PR exists and whether its description needs updating. If the findings came from PR review threads, offer to resolve those threads after pushing.
 
