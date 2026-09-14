@@ -1,6 +1,6 @@
 ---
 name: review
-description: Run a structured, fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or asks for a self-review before pushing. Do not use merely to implement or fix code, push or ship changes, open or update a PR, or answer feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
+description: Run a quick, deep, or full fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or asks for a self-review before pushing. Do not use merely to implement or fix code, push or ship changes, open or update a PR, or answer feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
 metadata:
   version: '2.4.0'
 ---
@@ -9,7 +9,7 @@ metadata:
 
 ## Invocation boundary
 
-This is a heavyweight, multi-pass code review. Invoke it implicitly only when both
+This skill offers Quick, Deep, and Full review modes. Invoke it implicitly only when both
 conditions hold:
 
 1. The target is a concrete code change, diff, commit, branch, or pull request.
@@ -20,6 +20,9 @@ before I push", and "sanity-check the code in this branch" qualify. An explicit 
 to run this skill also invokes the workflow. Merely quoting, discussing, or editing the
 skill is not a request to run it. "Self-review my changes before I push" is an explicit
 review request, not a standing instruction to review before every push.
+
+An explicit review request defaults to Quick. Use Deep or Full only when the user asks for
+that mode or supplies its flag.
 
 Do not start this workflow solely because implementation, a fix, a push, or a PR
 operation is underway. An explicit review request can start it at any stage. When the
@@ -39,30 +42,33 @@ comprehensive review as an optional next step when useful.
 The re-review instructions apply when the user requests another review or has requested
 the `--fix` loop. They do not automatically start another review after ordinary fixes.
 
-The session that wrote the code cannot review it. It still holds the plan and the
-reasoning, so it reads the change as what it meant instead of what it says. That is why
-an in-session self-review passes and the PR review then finds real issues.
+When the harness supports sub-tasks, the session that wrote the code must not review it. It
+still holds the plan and reasoning, so it can read the change as what it meant instead of
+what it says. In Quick, use one fresh reviewer context. Deep and Full use separate finder
+and verifier contexts.
 
-This review is built around two rules that decide whether it works:
+Deep and Full preserve two rules that decide whether the review works:
 
 - The people looking for problems have never seen your reasoning.
 - Looking for problems and deciding whether they are real are done by different people.
 
-Collapsing those two roles into one agent is the single largest cause of missed findings.
-An agent that must be sure before it speaks kills its own half-formed candidates, and a
-candidate that is never spoken is never checked.
+Collapsing those roles into one agent is the largest risk to Deep and Full review quality.
+Quick keeps a fresh review context, then asks that reviewer to substantiate each finding in
+the same pass. It costs less, but its verification is less independent. Quick reports only
+findings with a concrete failure scenario that the reviewer can substantiate from code. It
+does not report unresolved candidates as findings.
 
 ## Running this in any harness
 
-This needs three things: run the same instructions in several passes that do not share
-context, read files, and run `git`. Anything that can do that can run this review.
+Every mode needs code reading and `git`. Quick uses one reviewer pass. Deep and Full need
+multiple passes that do not share context. Anything that can provide those basics can run
+this review.
 
-- With parallel sub-tasks or subagents, run the angles concurrently. That is the fast path.
-- With sequential sub-tasks, run them one at a time.
-- With no sub-tasks at all, run each angle yourself as a separate pass, and start each one
-  by re-reading the diff rather than continuing from the last angle's conclusions. Say in
-  your report that you ran it single-context, because the angles will bleed into each
-  other and recall will be lower.
+- In Quick, use one independent reviewer pass when the harness supports it.
+- In Deep or Full, run the selected angles concurrently when possible, or one at a time.
+- If the harness has no sub-tasks, run Quick in one context and disclose that in the report.
+  For Deep or Full, re-read the diff at the start of each angle and report that the review
+  ran single-context.
 
 Nothing below depends on a particular tool name.
 
@@ -70,20 +76,32 @@ Review requests report findings. Implement changes only when the user requests f
 including `--fix`. Optional cleanup and speculative improvements remain suggestions
 unless the user explicitly accepts them.
 
-## Flags
+## Modes and flags
 
-- `--full` runs every angle. Without it the review runs angles A, B, C and H only: the
-  three correctness angles plus altitude. That is the default, and it costs you the
-  surfaces, cleanup, conventions and tests angles.
-- `--low`, `--med`, `--high` set the depth tier. `--med` is the default.
+Choose one review mode. If the user does not name one, use Quick.
+
+- `--quick` runs one focused review pass. This is the default.
+- `--deep` runs the current default review: angles A, B, C, and H, with independent
+  verification of surviving findings.
+- `--full` runs every angle, with independent verification of surviving findings.
+- `--low`, `--med`, and `--high` set the effort tier independently of the review mode.
+  The default is `--low`.
 - `--fix` alternates reviewing and fixing, described below. `--fix N` sets the round limit.
 - `--base <ref>` overrides the base the diff is taken against.
 
-Run exactly the set the flags select. Never drop an angle on your own judgment, however
-small or mechanical the change looks. A one-line change to code that moves money or writes
-to a database deserves every angle it was given, and "this looked trivial" is exactly how
-that gets missed. The user shortens the review by asking, not you. The same rule runs the
-other way: never quietly upgrade the tier or add `--full` because the change looks scary.
+Do not ask for approval to switch modes after a review. Stop after the selected mode and
+report its result. The user can request another mode separately. A failed Quick check does
+not prevent a later, explicit Deep or Full request, and Quick never starts Deep or Full
+automatically.
+
+The three mode flags are mutually exclusive. If the user supplies more than one, ask which
+mode they want. Effort flags may be combined with any one mode.
+
+Examples: `--quick --med` uses one `--med`-tier pass, `--deep --low` runs angles A, B, C,
+and H at the `--low` tier, and `--full --high` runs every angle at the `--high` tier.
+
+Run exactly the mode and tier selected. Never add angles, raise effort, or move to a more
+expensive mode based on your own judgment.
 
 ## Depth tier
 
@@ -92,8 +110,8 @@ alike.
 
 | Tier | Model | Effort |
 | --- | --- | --- |
-| `--low` | Claude: Opus 5 · Codex: Sol | medium |
-| `--med` (default) | Claude: Opus 5 · Codex: Sol | high |
+| `--low` (default) | Claude: Opus 5 · Codex: Sol | medium |
+| `--med` | Claude: Opus 5 · Codex: Sol | high |
 | `--high` | Claude: Fable 5.1 · Codex: Sol | high · Codex: xhigh |
 
 How you apply it depends on what the harness lets you set when you spawn a pass.
@@ -111,7 +129,37 @@ How you apply it depends on what the harness lets you set when you spawn a pass.
 Never write the effort into the pass prompt as English. Either the harness set it or it did
 not, and a pass told to "think harder" has not had its effort raised.
 
-## Your role: dispatcher, not reviewer
+## Quick workflow
+
+Quick is a focused development review, not a smaller version of every Deep angle. Use one
+reviewer pass at the selected effort tier. Use Step 1 to scope the diff. The reviewer should
+inspect all changed files and relevant enclosing functions or callers.
+
+Before the review pass, run `git diff --check` against the scoped diff when the target is a
+Git worktree. Run other checks only when the repository provides a clearly scoped command
+that is known to be quick, such as a package-level lint, typecheck, or targeted test. Do not
+run a full test suite or a broad CI command in Quick. If the likely runtime is unclear or the
+check is broad, skip it and say so. If a selected quick check fails, report the command and
+failure, then stop Quick before starting the code review. Do not claim the diff caused the
+failure unless the evidence shows that it did.
+
+The reviewer must substantiate each candidate in the same pass. Read the relevant code,
+trace a concrete failure scenario, and try to refute the claim. Run a targeted test or other
+small reproduction when that is clearly quick. Report only confirmed defects. Omit refuted
+or unresolved candidates instead of presenting them as findings. Do not start separate
+verifier agents for Quick findings.
+
+Keep the Quick report short. State the effort tier, checks run or skipped, and any confirmed
+findings. If there are none, say "No confirmed issues found in this Quick review." Do not
+imply that Quick provides Deep or Full coverage. Never prompt to upgrade or start another
+mode automatically.
+
+## Deep and Full workflow
+
+The dispatcher role and Steps 2 through 5 below apply only to Deep and Full. Step 1 scopes
+the change for every mode.
+
+## Your role: dispatcher, not reviewer (Deep and Full)
 
 Do not review the change yourself. Assemble the brief, run the angles, run verification,
 report. Never judge a finding, soften one, or drop one outside the verification step. If
@@ -138,7 +186,7 @@ usually run before the commit.
 
 Record `git rev-parse --short HEAD`. A later re-review reads it back.
 
-## Step 2: find candidates
+## Step 2: find candidates (Deep and Full only)
 
 Run the angles below, each as its own pass with its own context. Every angle returns **up
 to 6 candidates**, and each candidate has: file, line, a one-line summary, and a
@@ -156,7 +204,7 @@ Give every angle the same standing instruction:
 Run the angles the flags selected, each at the tier's model and effort, and name both the
 set and the tier in the report.
 
-## Step 3: verify
+## Step 3: verify (Deep and Full only)
 
 Remove near-duplicates, keeping one per defect and location. Then check each remaining
 candidate in its own pass at the same tier, given the diff, the relevant files and the
@@ -189,12 +237,12 @@ a boundary the code does not exclude, a partial failure, a lost anchor in a patt
 A verifier that cannot decide returns PLAUSIBLE. Uncertainty is a verdict, not a reason to
 discard.
 
-## Step 4: coverage check
+## Step 4: coverage check (Deep and Full only)
 
 Compare the files the angles examined against `git diff --name-only`. For any changed file
 no angle examined, run one more pass of angle A over it. Then report.
 
-## Step 5: report
+## Step 5: report (Deep and Full only)
 
 Grade every surviving finding by **the outcome named in its failure scenario**, never by
 how narrow or unlikely the trigger is:
@@ -243,6 +291,9 @@ everything". Zero findings is a good outcome, and worth saying plainly.
 
 ## Re-review after fixes
 
+Use the mode and effort the user selects for each re-review. If no mode is specified, use
+Quick at Low. Never escalate from Quick to Deep or Full automatically.
+
 Run this skill again and add to the brief: the prior findings quoted exactly as the
 reviewer wrote them, which ones were meant to be fixed but never how they were fixed, and
 the commits since the recorded SHA from `git log --oneline <sha>..HEAD`.
@@ -252,19 +303,21 @@ it. `not valid` when the claim does not hold against the current files. `still o
 otherwise. A commit message claiming a fix is not evidence, the files are. A fix that
 moved the problem is `still open`, with a note on where it went.
 
-The new commits are code nobody has reviewed. They get the selected set of angles, not an automatic expansion to `--full`. Do not
-re-derive the parts they did not touch. Review the entire original change again only
+The new commits are code nobody has reviewed. They get the selected review mode, not an
+automatic expansion to Deep or Full. Do not re-derive the parts they did not touch. Review
+the entire original change again only
 when the user explicitly requests it.
 
 If the earlier findings or reviewed base are missing, try to recover the recorded review
-first. If they remain unavailable, report the gap and ask for the missing baseline or
-an explicit full review. Do not silently broaden the scope.
+first. If they remain unavailable, report the gap and limit conclusions to what can be
+checked. Do not silently broaden the scope or prompt the user to switch modes.
 
 ## Fix mode
 
-With `--fix`, alternate reviewing and fixing instead of stopping at a report. The first round
-reviews the requested scope. Later rounds review the fixes and prior findings under
-the re-review rules above, followed by fixes for what they found.
+With `--fix`, alternate reviewing and fixing instead of stopping at a report. Use the
+selected mode and effort for every round. The first round reviews the requested scope. Later
+rounds review the fixes and prior findings under the re-review rules above, followed by fixes
+for what they found. Do not escalate modes automatically.
 
 **Stop when any of these is true, and say which one ended the loop:**
 
