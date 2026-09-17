@@ -2,7 +2,7 @@
 name: review
 description: Run a quick, deep, or ultra fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or asks for a self-review before pushing. Do not use merely to implement or fix code, push or ship changes, open or update a PR, or answer feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
 metadata:
-  version: '2.4.1'
+  version: '2.5.0'
 ---
 
 # Review
@@ -143,6 +143,7 @@ check is broad, skip it and say so. If a selected quick check fails, report the 
 failure, then stop Quick before starting the code review. Do not claim the diff caused the
 failure unless the evidence shows that it did.
 
+The reviewer follows the governing-documents rule below before judging any behaviour.
 The reviewer must substantiate each candidate in the same pass. Read the relevant code,
 trace a concrete failure scenario, and try to refute the claim. Run a targeted test or other
 small reproduction when that is clearly quick. Report only confirmed defects. Omit refuted
@@ -201,6 +202,15 @@ Give every angle the same standing instruction:
 > silently is the main way reviews miss real bugs. If you cannot name a concrete wrong
 > outcome, that is not a candidate and you drop it.
 
+Every pass, in every mode, also gets the governing-documents rule:
+
+> Before judging behaviour, find the documents that govern the changed files: behaviour
+> specs, design docs, and contributor rules, wherever the repository keeps them, such as a
+> specs directory, `docs/`, a design or context file, or decision records. A rule stated
+> there is the intended behaviour. Code that follows it is not a defect, and code that
+> contradicts it is. Do not stop at the first document you find, and do not take the
+> brief's word for what the rules are.
+
 Run the angles the flags selected, each at the tier's model and effort, and name both the
 set and the tier in the report.
 
@@ -213,7 +223,8 @@ Each returns exactly one verdict:
 
 - **REFUTED**, only when you can construct the refutation from the code: the claim
   misquotes the code, a type or constant or invariant makes it impossible, this change
-  already handles it, or it has no observable effect. Cite the lines.
+  already handles it, it has no observable effect, or a governing document explicitly
+  sanctions the behaviour. Cite the lines, or the document and its rule.
 - **CONFIRMED** when the failure scenario holds against the code.
 - **PLAUSIBLE** otherwise.
 
