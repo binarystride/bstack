@@ -1,40 +1,36 @@
-# bstack marketplace
+# bstack has moved
 
-A one-plugin marketplace holding [bstack](./bstack), rigorous agent workflows that run on any agent harness.
+This repo is archived. `bstack` now lives as a second plugin in the
+[`binarystride` company marketplace](https://github.com/binarystride/binarystride-os)
+at [`plugins/bstack/`](https://github.com/binarystride/binarystride-os/tree/main/plugins/bstack),
+with its git history preserved. All future work happens there.
 
-## Install
-
-**Codex, Cursor, GitHub Copilot, VS Code, Kiro, ChatGPT** read the [Agent Plugins](https://agent-plugins.org/) standard. Point your client at this repo and install the plugin from the `bstack/` directory.
+## Install from the new location
 
 **Claude Code:**
 
 ```bash
-/plugin marketplace add binarystride/bstack
+/plugin marketplace add binarystride/binarystride-os
 ```
 
 ```bash
-/plugin install bstack@bstack
+/plugin install bstack@binarystride
 ```
 
-**Cursor** reads either manifest. Add this repo as a marketplace and install `bstack`.
+**Codex:**
 
-## Layout
-
-```
-.agents/plugins/marketplace.json  Agent Plugins marketplace (Codex et al.)
-.claude-plugin/marketplace.json   Claude Code marketplace
-.cursor-plugin/marketplace.json   Cursor marketplace
-bstack/
-  plugin.json                     Agent Plugins v1 manifest
-  .claude-plugin/plugin.json      Claude Code manifest
-  .cursor-plugin/plugin.json      Cursor manifest
-  skills/                         12 skills (one holds the 19 principles)
-  agents/                         3 review subagents (Claude Code only)
-  docs/guide/                     the walkthrough
+```bash
+codex plugin marketplace add binarystride/binarystride-os
+codex plugin add bstack@binarystride
 ```
 
-One `skills/` tree, three manifests. The Agent Plugins spec covers skills and MCP servers only, so the subagents load only where the harness reads an `agents/` directory. Nothing breaks without them; see the plugin [readme](./bstack/README.md#subagents).
+**Cursor** reads either manifest. Add `binarystride/binarystride-os` as a
+marketplace and install `bstack`.
 
-## License
+**Codex, GitHub Copilot, VS Code, Kiro, ChatGPT** read the
+[Agent Plugins](https://agent-plugins.org/) standard. Point your client at
+`binarystride/binarystride-os` and install the plugin from the
+`plugins/bstack/` directory.
 
-Private. All rights reserved.
+See the [plugin readme](https://github.com/binarystride/binarystride-os/tree/main/plugins/bstack)
+and [`install.md`](https://binarystride-os.vercel.app/install.md) for details.
