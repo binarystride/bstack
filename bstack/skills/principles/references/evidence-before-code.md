@@ -8,7 +8,7 @@ Write code only for what you have observed. Every branch, guard, retry, fallback
 
 - Before you handle a case, count it. Show the query and the number.
 - A case you looked for and did not find goes in the PR description under "Not handled", with how you looked. It does not go in the code.
-- Before you fix a review finding about data or state, count how often that input occurs. If it never occurs, reply with the count instead of changing code.
+- Before you fix a review finding about existing data or state, count how often that input occurs. If it never occurs, reply with the count instead of changing code.
 - Label every claim you report: **confirmed** (you checked it, and say how), **inferred** (you reasoned it, and say from what), or **unverified**. Never present an inference as a fact.
 - A test fixture proves that a code path exists. It does not prove that the data occurs.
 - A count settles questions about inputs that already exist. For a state, race or partial failure that the new code itself creates, judge from the code and the upstream contract (documented retries, ordering, limits). Production has no record of it yet.
