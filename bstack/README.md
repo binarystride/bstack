@@ -8,9 +8,7 @@ It runs on any harness. Three manifests over one `skills/` tree, and every skill
 
 ## install
 
-This directory is the plugin. The repo root above it is the marketplace.
-
-**Codex, Cursor, GitHub Copilot, VS Code, Kiro, ChatGPT** read the [Agent Plugins](https://agent-plugins.org/) standard. Point your client at this repo and install the `bstack` plugin from the `bstack/` directory.
+This directory is the plugin. The repo root is the `bstack` marketplace.
 
 **Claude Code:**
 
@@ -22,7 +20,21 @@ This directory is the plugin. The repo root above it is the marketplace.
 /plugin install bstack@bstack
 ```
 
+**Codex:**
+
+```bash
+codex plugin marketplace add binarystride/bstack
+```
+
+```bash
+codex plugin add bstack@bstack
+```
+
 **Cursor** reads either manifest. Add this repo as a marketplace and install `bstack`.
+
+**GitHub Copilot, VS Code, Kiro, ChatGPT** read the [Agent Plugins](https://agent-plugins.org/) standard. Point your client at this repo and install the `bstack` plugin from the `bstack/` directory.
+
+To give a whole team bstack, see [team install](../README.md#team-install).
 
 Nothing to configure after install. There is no setup step and no model config file, by design: the skills describe the model *role* they need, and your harness resolves it.
 
@@ -42,11 +54,11 @@ Everything else works on plain git.
 
 Invoke the one that matches the step you're on. Nothing routes for you, and nothing is sticky: a skill loads its rules into the conversation and they stay there until you ask for a different pass.
 
-```
+```text
 /how do we cancel runs? do we have an n+1 when we look up every run to cancel?
 ```
 
-```
+```text
 /review -- --full
 ```
 
@@ -60,6 +72,7 @@ Invoke the one that matches the step you're on. Nothing routes for you, and noth
 | [`/architect`](./skills/architect/SKILL.md) | you're about to write code that crosses a function boundary and want the caller's usage, types, and module shape settled first. |
 | [`/review`](./skills/review/SKILL.md) | you're about to push and want the change reviewed by passes that never saw your reasoning, each candidate finding verified before it reaches you. |
 | [`/interrogate`](./skills/interrogate/SKILL.md) | you have a diff and want several different models to try to break it, including a strict code-quality lens. |
+| [`/walk-bug`](./skills/walk-bug/SKILL.md) | you have one bug report, error, or complaint and want the cause found and explained in the shape of a good PR description: one-sentence verdict, things to note, the failure path drawn as call trees, pseudocode, or diffs, then the fix. |
 | [`/walk-me`](./skills/walk-me/SKILL.md) | you have a list of findings and want them one at a time: short explanation, recommended fix, your decision, then the change. |
 | [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
 | [`/unslop`](./skills/unslop/SKILL.md) | you're cleaning up writing. removes AI tells. |
@@ -122,4 +135,4 @@ Nineteen short rules, one per file, indexed by the [`principles`](./skills/princ
 
 ## license
 
-Private. All rights reserved.
+MIT. bstack started as a portable build of [poteto's pstack](https://github.com/cursor/plugins/tree/main/pstack), which is MIT licensed, and much of its text still comes from pstack. Both copyright notices are in [`LICENSE`](./LICENSE).

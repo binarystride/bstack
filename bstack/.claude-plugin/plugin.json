@@ -1,9 +1,9 @@
 {
   "name": "bstack",
   "displayName": "bstack",
-  "version": "2.5.0",
+  "version": "2.7.1",
   "description": "Rigorous agent workflows for coding agents. Fewer lines of code, at higher quality, with the evidence attached. Portable across agent harnesses.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "keywords": [
     "bstack",
     "workflow",
@@ -16,6 +16,6 @@
   "author": {
     "name": "Binary Stride"
   },
-  "homepage": "https://github.com/binarystride/bstack",
+  "homepage": "https://github.com/binarystride/bstack/tree/main/bstack",
   "repository": "https://github.com/binarystride/bstack"
 }
