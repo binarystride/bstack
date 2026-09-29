@@ -92,7 +92,7 @@ Prove it on the real thing before you move on:
 
 ## Phase 5: Self-review
 
-Run the **review** skill with `--deep --fix`. Use `--ultra --high --fix` when the change touches money, third-party API calls, authentication or stored data shapes. For those changes, also follow [interrogate](../interrogate/SKILL.md) on the diff, taking the intent from the ticket instead of asking for it, and treat its Act on and Consider findings as your own review findings, triaged per [`references/triage.md`](references/triage.md).
+Run the **review** skill with `--quick --fix`. It repeats until a round finds nothing new, for at most three rounds. Use `--deep --fix` instead when the change affects money (payments, refunds, prices, orders), authentication or permissions, or stored data shapes, or when it spans several modules. Do not use `--ultra`: the review bot is the second review.
 
 Brief every review with the ticket and a plain statement of what the change does. Never include the PR description, your reasoning, the decisions you made, or what you already checked. Fix commits get reviewed too.
 
