@@ -4,13 +4,13 @@
     "name": "Binary Stride"
   },
   "metadata": {
-    "description": "Portable build of bstack: rigorous agent workflows that run on any harness."
+    "description": "bstack: Rigorous agent workflows for coding agents. Fewer lines of code, at higher quality, with the evidence attached."
   },
   "plugins": [
     {
       "name": "bstack",
       "source": "./bstack",
-      "description": "Rigorous agent workflows you can parallelize with confidence."
+      "description": "Rigorous agent workflows for coding agents. Fewer lines of code, at higher quality, with the evidence attached."
     }
   ]
 }

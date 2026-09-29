@@ -44,12 +44,14 @@ Spawn one reviewer per distinct model you can reach, up to four. Model diversity
 Label the reviewers A, B, C, D in the order you spawn them, and name each reviewer's model in the final report so the reader can weigh the agreement.
 
 For each reviewer:
+
 - A general-purpose subagent, no specialised persona.
 - Read-only: it needs no write or edit tools, and giving it none keeps it from "fixing" what it should be reporting.
 
 If the user names a model or a specific external reviewer in the request, honour that over the ranking above.
 
 Read `references/reviewer-prompt.md` and fill in the template with:
+
 1. The stated intent
 2. The diff or file contents
 3. The review rubric from `references/rubric.md`
@@ -83,6 +85,7 @@ Categorize every finding using these buckets:
 - **Dismissed**. Wrong, nitpicky, or missing context. Brief explanation why.
 
 For each finding, include:
+
 - Which model(s) raised it
 - The category (act on / consider / noted / dismissed)
 - A one-line rationale for the categorization
@@ -92,22 +95,29 @@ For each finding, include:
 Present the verdict in this structure:
 
 ### Intent
+>
 > [The stated intent paragraph from Step 2]
 
 ### Reviewers
+
 - Reviewer [label]: [model name], [N findings] (one bullet per reviewer)
 
 ### Act On
+
 [Findings that should be addressed. For each: description, which models raised it, why it matters.]
 
 ### Consider
+
 [Findings worth thinking about. For each: description, which models raised it, tradeoff involved.]
 
 ### Noted
+
 [Valid but low-priority. Brief list.]
 
 ### Dismissed
+
 [Rejected findings with brief rationale. This shows the user what was filtered out and why, so they can override your judgment if they disagree.]
 
 ### Agreement Map
+
 [Where did models agree, where did they diverge, and what does the pattern of agreement/disagreement tell us?]

@@ -151,7 +151,7 @@ or unresolved candidates instead of presenting them as findings. Do not start se
 verifier agents for Quick findings.
 
 Keep the Quick report short. State the effort tier, checks run or skipped, and any confirmed
-findings. If there are none, say "No confirmed issues found in this Quick review." Do not
+findings in the finding shape from Step 5, numbered from `Issue 1`. If there are none, say "No confirmed issues found in this Quick review." Do not
 imply that Quick provides Deep or Ultra coverage. Never prompt to upgrade or start another
 mode automatically.
 
@@ -281,18 +281,35 @@ the findings it produces, and name the alternative mechanism that makes that cla
 defect impossible. Fixing the findings one by one inside the same design is how a review
 turns into three rounds of patches. When no such group exists, omit the paragraph.
 
-Report findings most severe first, as ordinary chat markdown. A finding is prose to read,
-not a block to copy, and it has four parts in this order:
+Report findings most severe first, as ordinary chat markdown, numbered `Issue 1`, `Issue 2`
+and so on in that order. The number is how the user will refer to the finding afterwards
+("fix issue 2, skip issue 3"), so every finding gets one and the numbers never repeat or
+skip. A finding is prose to read, not a block to copy. It has these parts in this order:
 
-1. A bold heading holding the grade, the `path:line` as inline code, and the category,
-   verdict and origin in brackets, for example `[correctness · CONFIRMED · regression]`.
-2. One short paragraph saying what is wrong and the concrete fix.
-3. A line beginning `Failure:` giving the inputs or state and the wrong outcome.
-4. The source lines you actually read, in a fenced code block.
+1. A bold heading: `**Issue N · P1 · <title>**`. The title is a short plain sentence naming
+   what goes wrong, in the reader's terms, for example `Refund webhook marks the order
+   refunded before the PSP confirms`. Never put a path, a function name, or a category in
+   the title.
+2. One line of metadata as inline code, so it is scannable and stays out of the title:
+   `server/payments/webhook.ts:42` followed by the category, verdict and origin in
+   brackets, for example `[correctness · CONFIRMED · regression]`.
+3. One short paragraph saying what goes wrong. Lead with the consequence for the customer
+   where there is one, otherwise for the system. Then the cause in one sentence.
+4. A line beginning `Failure:` giving the inputs or state and the wrong outcome.
+5. One fenced block showing the failure, whichever lands fastest: the source lines you
+   actually read with the failing line marked `<-- here`, or a call tree, pseudocode, or
+   sequence diagram of the path from trigger to wrong outcome, drawn as in
+   `../walk-bug/references/views.md`. Keep only the lines that carry the failure.
+6. `Fix:` in one or two sentences. Add a second fenced `diff` block when the change fits
+   in a few lines and a diff is clearer than the sentence. Otherwise no second block.
 
-Part 4 is the only fenced block a finding may contain. Never wrap a whole finding in a
-fence, because that renders as a copy-paste block instead of readable text. Never
-hard-wrap your prose at a fixed column either, because the client wraps it for the reader.
+Those are the only fenced blocks a finding may contain, and every block must contain the
+marked line or the changed line. Never wrap a whole finding in a fence, because that
+renders as a copy-paste block instead of readable text. Never hard-wrap your prose at a
+fixed column either, because the client wraps it for the reader.
+
+Before the findings, one line listing them: `Issue 1 P1 <title> · Issue 2 P2 <title> ...`,
+so the reader sees the whole set before the detail.
 
 Then one verdict line with the origin counts, such as `1 regression, 1 new, 1 existing`.
 Then, on its own line, `Reviewed at <sha>`.
@@ -309,7 +326,8 @@ Run this skill again and add to the brief: the prior findings quoted exactly as 
 reviewer wrote them, which ones were meant to be fixed but never how they were fixed, and
 the commits since the recorded SHA from `git log --oneline <sha>..HEAD`.
 
-Give every prior finding a disposition. `fixed` once you have read the code that resolves
+Prior findings keep their issue numbers; new findings continue the sequence, so `Issue 3`
+means the same thing in every round. Give every prior finding a disposition. `fixed` once you have read the code that resolves
 it. `not valid` when the claim does not hold against the current files. `still open`
 otherwise. A commit message claiming a fix is not evidence, the files are. A fix that
 moved the problem is `still open`, with a note on where it went.
