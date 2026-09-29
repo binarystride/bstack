@@ -22,7 +22,7 @@ Verdict on line one: **archive** or **not yet**, plus the reason in under ten wo
 
 **Open.** One line per item, owner first: `**you**` or `**agent**`, then a separator, then what it is, then whether it blocks. Owner first so the reader scans a column of owners instead of reading to the end of each line to find whose job it is. Sort blockers first. If the list is empty, say so in one line.
 
-```
+```markdown
 - **agent** · Update the ticket status to reflect the merge. Blocks archiving.
 - **you** · Decide whether the sibling repo needs the same bump. Not blocking.
 ```
