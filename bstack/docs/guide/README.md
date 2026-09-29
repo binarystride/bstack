@@ -8,7 +8,7 @@ Here's what you'll learn:
 2. [Understand the code](./02-understand.md). `/how` and `/teach` before you edit anything.
 3. [Design the change](./03-design.md). `/architect` and `/interrogate` before code locks in a shape.
 4. [Review and ship](./04-review-and-ship.md). Prove behavior on the real app, then open a focused PR.
-5. [Steer with principle names](./05-principles.md). The 19 names that redirect an agent mid-task.
+5. [Steer with principle names](./05-principles.md). The 20 names that redirect an agent mid-task.
 6. [Write it well](./06-writing.md). `/unslop`, `/technical-writing`, and authoring your own skill.
 7. [Recipes and pitfalls](./07-recipes-and-pitfalls.md). Prompts to copy and mistakes to skip.
 

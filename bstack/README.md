@@ -46,7 +46,7 @@ One external tool gets used, and only by the steps that reach for it:
 
 | Tool | Needed by | Without it |
 |---|---|---|
-| `gh` | `/done`, when they read PRs and issues | those steps lose their PR and issue evidence |
+| `gh` | `/done`, when they read PRs and issues; `/ship`, to open and watch its PR | `/done` loses its PR and issue evidence; `/ship` needs another way to reach the PR |
 
 Everything else works on plain git.
 
@@ -74,6 +74,7 @@ Invoke the one that matches the step you're on. Nothing routes for you, and noth
 | [`/interrogate`](./skills/interrogate/SKILL.md) | you have a diff and want several different models to try to break it, including a strict code-quality lens. |
 | [`/walk-bug`](./skills/walk-bug/SKILL.md) | you have one bug report, error, or complaint and want the cause found and explained in the shape of a good PR description: one-sentence verdict, things to note, the failure path drawn as call trees, pseudocode, or diffs, then the fix. |
 | [`/walk-me`](./skills/walk-me/SKILL.md) | you have a list of findings and want them one at a time: short explanation, recommended fix, your decision, then the change. |
+| [`/ship`](./skills/ship/SKILL.md) | you want one ticket taken to a merge-ready PR while you're away: evidence first, the smallest design, self-review, then a loop with your review bot capped at five runs. ends ready, needs decision, or stopped, and never merges. |
 | [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
 | [`/unslop`](./skills/unslop/SKILL.md) | you're cleaning up writing. removes AI tells. |
 | [`/technical-writing`](./skills/technical-writing/SKILL.md) | layered doc standard (Diátaxis + Google developer style + STE + Global English) for docs, RFCs, readmes, PR descriptions, commit messages. |
@@ -104,10 +105,10 @@ On a harness with no agents directory, nothing breaks. `/review` runs its passes
 
 ## principles
 
-Nineteen short rules, one per file, indexed by the [`principles`](./skills/principles/SKILL.md) skill. They are reference files rather than skills of their own, so they don't crowd your slash menu. Other skills cite a principle by name and link the rule. You steer with the names too: one phrase redirects the work more precisely than a paragraph of instructions.
+Twenty short rules, one per file, indexed by the [`principles`](./skills/principles/SKILL.md) skill. They are reference files rather than skills of their own, so they don't crowd your slash menu. Other skills cite a principle by name and link the rule. You steer with the names too: one phrase redirects the work more precisely than a paragraph of instructions.
 
 <details>
-<summary>all nineteen principles</summary>
+<summary>all twenty principles</summary>
 
 | principle | group | rule |
 |---|---|---|
@@ -126,6 +127,7 @@ Nineteen short rules, one per file, indexed by the [`principles`](./skills/princ
 | [migrate-callers-then-delete-legacy-apis](./skills/principles/references/migrate-callers-then-delete-legacy-apis.md) | architecture | Migrate callers and delete the old API in the same wave instead of preserving compatibility layers. |
 | [separate-before-serializing-shared-state](./skills/principles/references/separate-before-serializing-shared-state.md) | architecture | Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant. |
 | [prove-it-works](./skills/principles/references/prove-it-works.md) | verification | Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'. |
+| [evidence-before-code](./skills/principles/references/evidence-before-code.md) | verification | Write code only for observed cases: every branch, guard and fix traces to a production count, a log line, a document, a spec rule, or the requirement. Label each claim confirmed, inferred, or unverified. |
 | [fix-root-causes](./skills/principles/references/fix-root-causes.md) | verification | Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes. |
 | [guard-the-context-window](./skills/principles/references/guard-the-context-window.md) | delegation | Route bulk to subagents; keep summaries in the main thread, not raw payloads. |
 | [never-block-on-the-human](./skills/principles/references/never-block-on-the-human.md) | delegation | Proceed, present the result, let the human course-correct after the fact; reserve confirmation for irreversible actions. |

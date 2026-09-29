@@ -59,4 +59,6 @@ Five narrow PRs beat one fat one, and stacked follow-ups beat a growing branch. 
 
 An open PR starts collecting blockers immediately: checks fail, reviewers comment, trunk moves. Take them in order, batch the fixes into one push so checks restart once, and stay skeptical of the review list. Humans and bots file real catches and noise together. A real finding gets a fix; noise gets dismissed with the disproof posted on the thread.
 
+To hand an agent a whole ticket and come back to a finished PR, use [`/ship`](../../skills/ship/SKILL.md). It runs these steps in order, loops with your review bot, and stops at a PR you only need to read and merge.
+
 Next: [Steer with principle names](./05-principles.md).

@@ -1,6 +1,6 @@
 ---
 name: principles
-description: "The nineteen bstack principles, one rule each. Read when a principle is cited by name, in a skill, a review, or the user's own words, and you need the rule behind the name rather than the label."
+description: "The twenty bstack principles, one rule each. Read when a principle is cited by name, in a skill, a review, or the user's own words, and you need the rule behind the name rather than the label."
 ---
 
 # Principles
@@ -44,6 +44,7 @@ What counts as proof.
 | principle | rule |
 |---|---|
 | [prove-it-works](references/prove-it-works.md) | Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'. |
+| [evidence-before-code](references/evidence-before-code.md) | Write code only for observed cases: every branch, guard and fix traces to a production count, a log line, a document, a spec rule, or the requirement. Label each claim confirmed, inferred, or unverified. |
 | [fix-root-causes](references/fix-root-causes.md) | Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes. |
 
 ## Delegation
