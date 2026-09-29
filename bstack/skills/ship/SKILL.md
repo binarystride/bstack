@@ -147,10 +147,10 @@ For STOPPED, skip steps 2 and 3: leave the PR as a draft and the ticket where it
 
 ## Running unattended
 
-The exit line is what an outside check looks for. In Claude Code, start the run under `/goal`, so a separate model checks for that line after every turn and sends the work back when it is missing:
+The exit line is what an outside check looks for. If your harness has a goal command that keeps the work going until a condition holds, such as `/goal` in Claude Code and in Codex, start the run under it:
 
 ```text
-/goal Run /bstack:ship ABC-123. Done when the run ends with a line starting "Ship exit:".
+/goal Run the ship skill on ABC-123. Done when the run ends with a line starting "Ship exit:".
 ```
 
-In other harnesses, run every wait as a background command that wakes you, and do not end the turn before an exit state.
+Without one, run every wait as a background command that wakes you, and do not end the turn before an exit state.
