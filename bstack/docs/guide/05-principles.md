@@ -1,6 +1,6 @@
 # Steer with principle names
 
-bstack ships 19 principles, one rule per file under the [`principles`](../../skills/principles/SKILL.md) skill. Other skills cite them by name, and an agent that applies one should name it in its reply along with the decision it changed.
+bstack ships 20 principles, one rule per file under the [`principles`](../../skills/principles/SKILL.md) skill. Other skills cite them by name, and an agent that applies one should name it in its reply along with the decision it changed.
 
 You don't invoke principles. You use their names to steer. Each name points at a complete rule the agent has already read, so one phrase redirects the work more precisely than a paragraph of instructions.
 
@@ -26,7 +26,7 @@ separate before serializing shared state. give each attempt its own worktree, no
 
 Each phrase lands because the rule behind it is specific. The agent still has to say, in its reply, which decision the rule changed. A principle citation with no decision behind it is the tell that it name-dropped instead of applying.
 
-## The 19, briefly
+## The 20, briefly
 
 The core principles decide how much to build and when to rethink the design:
 
@@ -51,6 +51,7 @@ The architecture principles decide where state, validation, and compatibility li
 The verification principles define what counts as proof:
 
 - [Prove It Works](../../skills/principles/references/prove-it-works.md) verifies the real artifact, not a proxy.
+- [Evidence Before Code](../../skills/principles/references/evidence-before-code.md) writes code only for cases someone has observed, and labels every claim.
 - [Fix Root Causes](../../skills/principles/references/fix-root-causes.md) reproduces and traces to the cause before changing code.
 
 The delegation principles keep parallel work sane:
