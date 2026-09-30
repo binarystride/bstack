@@ -111,7 +111,7 @@ If a fix keeps producing the next finding in the same flow, stop patching. Retur
 
 ## Phase 6: Open the PR
 
-Open it as a draft. Use the repository's title convention, with the ticket id. Write the description from [`references/pr-description.md`](references/pr-description.md) and run the **unslop** skill over it. The description is complete before the first bot run.
+Open it as a draft. Use the repository's title convention, with the ticket id. Write the description from [`references/pr-description.md`](references/pr-description.md). Run the **unslop** skill over it only if the user explicitly requests unslop or asks to remove AI writing patterns. Invoking ship alone does not authorize unslop. The description is complete before the first bot run.
 
 ## Phase 7: Review loop
 
