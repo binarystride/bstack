@@ -92,7 +92,18 @@ Prove it on the real thing before you move on:
 
 ## Phase 5: Self-review
 
-Run the **review** skill with `--quick --fix`. It repeats until a round finds nothing new, for at most three rounds. Use `--deep --fix` instead when the change affects money (payments, refunds, prices, orders), authentication or permissions, or stored data shapes, or when it spans several modules. Do not use `--ultra`: the review bot is the second review.
+Choose the review mode separately from the effort tier. Use `--quick` by default. Use `--deep` instead when the change affects money (payments, refunds, prices, orders), authentication or permissions, or stored data shapes, or when it spans several modules. Do not use `--ultra`: the review bot is the second review. An explicit user-selected mode or tier takes precedence.
+
+Choose the tier by what the next review needs to establish:
+
+- Use `--low` while iterating on implementation or checking fixes. Fix actionable findings, then review again.
+- Use `--med` when implementation is complete, the relevant checks pass, and no known actionable findings remain. A clean Med review is required before opening the PR or declaring it ready.
+- Go directly to Med when the change is already ready for that check. Low is not a prerequisite. Do not use iteration count or confidence alone to choose the tier.
+- If Med finds a defect, fix it and return to Low while iterating. Run Med again once the readiness conditions hold.
+
+Run each review pass separately so Ship can select the next tier. Allow at most three passes per self-review cycle across both tiers. Do not switch to Med merely because the pass budget is nearly exhausted. Keep the review skill's stop conditions for repeated findings and oscillation. If the cycle stops without the required clean review, exit with NEEDS DECISION rather than claiming readiness. When the user explicitly selects another tier, that tier replaces the Med readiness requirement.
+
+Record the base, reviewed commit, scope, mode, tier and findings after each pass. Reuse a clean Med review while its scope is unchanged. After fixes, review the fix commits, affected callers and prior findings; retain the earlier coverage of unchanged code. The final review record must cover the complete PR change, but it does not require reviewing unchanged portions again.
 
 Brief every review with the ticket and a plain statement of what the change does. Never include the PR description, your reasoning, the decisions you made, or what you already checked. Fix commits get reviewed too.
 
@@ -114,7 +125,7 @@ Each round:
 2. Wait for the verdict on the current head commit, for no longer than the bot's own job timeout (45 minutes when you cannot find it). Run the wait as a background command where the harness supports it, so it wakes you. A run that ends with no verdict still counts against the budget.
 3. Read the CI checks.
 4. Triage every new comment and thread, from the bot or a human, per [`references/triage.md`](references/triage.md).
-5. Make all of this round's fixes, self-review the fix commits with the Phase 5 mode and brief, push once, and update the PR description.
+5. Make all of this round's fixes, self-review the fix commits with the Phase 5 mode, tier selection and brief, push once, and update the PR description.
 6. Trigger another run only if the push changed behaviour. A push that changed only comments, docs, names or formatting does not need one.
 
 The loop ends when the verdict on the head commit is clean, when the last push changed no behaviour and every remaining finding is fixed or declined with evidence, or when the budget is spent and self-review of the head commit is clean.
@@ -127,6 +138,7 @@ Check the record, not your memory:
 
 - The branch is up to date with the base branch, with no conflicts.
 - CI is green on the head commit.
+- The Phase 5 review record covers the current change, including a clean Med readiness review of any later fixes, or the user's explicitly selected tier.
 - Every review thread is resolved, except human threads you disagreed with, which are listed under "Needs your decision".
 - The last bot verdict covers the head commit's changes, or the loop ended by one of its other rules. A merge from the base branch that needed no conflict resolution in this PR's files does not need a new run.
 - The finish condition passes, and the PR description shows the results.
