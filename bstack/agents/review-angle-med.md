@@ -1,7 +1,7 @@
 ---
 name: review-angle-med
 description: One finder or verifier pass for the review skill, med tier. Spawned by that skill, never on its own.
-model: opus
+model: claude-opus-5-5
 effort: high
 tools: Read, Grep, Glob, Bash
 ---

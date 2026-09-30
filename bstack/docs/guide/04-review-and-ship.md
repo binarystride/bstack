@@ -43,7 +43,7 @@ Flags shape the pass, and they're worth knowing:
 ```
 
 - `--full` runs every angle. Without it you get the three correctness angles plus conventions, and lose surfaces, cleanup, altitude, and tests.
-- `--low`, `--med`, `--high` set the depth tier, which picks the model and reasoning effort every pass runs at. `--med` is the default.
+- `--low`, `--med`, `--high` set the depth tier, which picks the model and reasoning effort every pass runs at. `--low` is the default. All tiers use Sol 6.1 in Codex and Opus 5.5 in Claude Code, at medium, high, and xhigh effort respectively.
 - `--fix` alternates reviewing and fixing until nothing above P3 remains.
 - `--base <ref>` sets what the diff is taken against.
 

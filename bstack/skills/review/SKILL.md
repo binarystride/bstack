@@ -2,7 +2,7 @@
 name: review
 description: Run a quick, deep, or ultra fresh-context review of a concrete code change, diff, commit, branch, or pull request. Use when the user explicitly asks to review code, find bugs in a change, review a PR, or asks for a self-review before pushing. Do not use merely to implement or fix code, push or ship changes, open or update a PR, or answer feature-status questions, production-readiness checks, release-note verification, code explanations, or general questions such as "is this implemented correctly?" unless the user specifically asks for a code review.
 metadata:
-  version: '2.5.0'
+  version: '2.8.1'
 ---
 
 # Review
@@ -110,15 +110,15 @@ alike.
 
 | Tier | Model | Effort |
 | --- | --- | --- |
-| `--low` (default) | Claude: Opus 5 · Codex: Sol | medium |
-| `--med` | Claude: Opus 5 · Codex: Sol | high |
-| `--high` | Claude: Fable 5.1 · Codex: Sol | high · Codex: xhigh |
+| `--low` (default) | Claude: Opus 5.5 · Codex: Sol 6.1 | medium |
+| `--med` | Claude: Opus 5.5 · Codex: Sol 6.1 | high |
+| `--high` | Claude: Opus 5.5 · Codex: Sol 6.1 | xhigh |
 
 How you apply it depends on what the harness lets you set when you spawn a pass.
 
 - **Model and effort both per spawn** (Codex `spawn_agent`): pass them directly, with
   `fork_turns="none"` so the pass inherits none of your context. Codex spells the tier as
-  `model="gpt-5.6-sol"` with `medium`, `high` and `xhigh` reasoning effort.
+  `model="gpt-6.1-sol"` with `medium`, `high` and `xhigh` reasoning effort.
 - **Model per spawn, effort only in an agent definition** (Claude Code): spawn the agent
   type for the tier — `review-angle-low`, `review-angle-med`, `review-angle-high`, under
   whatever prefix your plugin gives them, such as `bstack:review-angle-high`. They ship

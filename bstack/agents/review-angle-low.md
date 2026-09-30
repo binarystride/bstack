@@ -1,7 +1,7 @@
 ---
 name: review-angle-low
 description: One finder or verifier pass for the review skill, low tier. Spawned by that skill, never on its own.
-model: opus
+model: claude-opus-5-5
 effort: medium
 tools: Read, Grep, Glob, Bash
 ---
