@@ -1,8 +1,8 @@
 ---
 name: review-angle-high
 description: One finder or verifier pass for the review skill, high tier. Spawned by that skill, never on its own.
-model: fable
-effort: high
+model: claude-opus-5-5
+effort: xhigh
 tools: Read, Grep, Glob, Bash
 ---
 
