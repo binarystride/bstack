@@ -1,11 +1,16 @@
 ---
 name: unslop
-description: Cut AI tells from any writing. Must always apply.
+description: "Cut AI tells from writing only when the user explicitly asks for unslop or asks to remove AI writing patterns. Do not apply automatically during writing, editing, teaching, technical writing, or shipping."
+disable-model-invocation: true
 ---
 
 # Unslop
 
 Edit text to remove AI patterns and add human voice.
+
+## Invocation boundary
+
+Apply only when the user explicitly requests this skill or asks to remove AI writing patterns from a target. Ordinary writing or editing requests do not qualify. Invoking another skill, including ship, teach, or technical-writing, does not authorize unslop. Quoting, discussing, or editing this skill does not invoke it.
 
 ## Process
 

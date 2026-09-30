@@ -55,7 +55,7 @@ Shorten the review by asking. The skill won't drop an angle on its own judgment,
 open the pr. small ordered commits, evidence in the description.
 ```
 
-Five narrow PRs beat one fat one, and stacked follow-ups beat a growing branch. Rebase the work into small ordered commits, put the evidence in the description, and run [`/unslop`](../../skills/unslop/SKILL.md) over the prose before you post it.
+Five narrow PRs beat one fat one, and stacked follow-ups beat a growing branch. Rebase the work into small ordered commits and put the evidence in the description. If you want AI writing patterns removed, explicitly request [`/unslop`](../../skills/unslop/SKILL.md) before you post it.
 
 An open PR starts collecting blockers immediately: checks fail, reviewers comment, trunk moves. Take them in order, batch the fixes into one push so checks restart once, and stay skeptical of the review list. Humans and bots file real catches and noise together. A real finding gets a fix; noise gets dismissed with the disproof posted on the thread.
 

@@ -10,7 +10,7 @@ Skills aren't the only thing you ship. PR descriptions, commit messages, readmes
 
 [`/unslop`](../../skills/unslop/SKILL.md) takes a target and any extra rules you have, then strips the AI tells: the throat-clearing, the false balance, the words that mean nothing. You'll develop your own shorthand. The skill reads intent fine from terse prompts like `unslop that, tighten it`.
 
-Use it on PR descriptions and commit bodies before you post them, not after someone tells you the description reads like a press release.
+Unslop is opt-in. Ask for it explicitly when you want it applied to PR descriptions, commit bodies, or other writing. Writing, editing, `/ship`, `/teach`, and `/technical-writing` do not apply it automatically.
 
 ## Write docs to a standard with `/technical-writing`
 
@@ -35,7 +35,7 @@ Agent-facing prose has a higher bar than human prose, because an unhelpful sente
 - Start from your real history rather than from how you imagine you work. Read back over recent sessions and look for corrections you have made more than twice. Those are your rules.
 - Draft it, run it on a real task, then revise. A skill written in one sitting without testing describes an aspiration, not a habit.
 
-Run the draft through `/unslop` before you commit it, and ship it as a PR so you review it like any other change.
+If you want AI writing patterns removed, explicitly request `/unslop` on the draft before you commit it. Ship it as a PR so you review it like any other change.
 
 **Pitfall:** don't edit a skill mid-task because it's misbehaving. Fix it in its own PR and keep the task moving. A skill edit that ships tangled into feature work is invisible to review and impossible to evaluate.
 
