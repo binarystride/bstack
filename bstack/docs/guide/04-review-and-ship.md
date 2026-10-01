@@ -61,4 +61,14 @@ An open PR starts collecting blockers immediately: checks fail, reviewers commen
 
 To hand an agent a whole ticket and come back to a finished PR, use [`/ship`](../../skills/ship/SKILL.md). It runs these steps in order, loops with your review bot, and stops at a PR you only need to read and merge.
 
+## Use a more lenient review threshold with `/ship --fast`
+
+```text
+/ship --fast add an empty state to the saved searches list using the existing empty-state component. verify the empty and populated states in the running app.
+```
+
+[`/ship --fast`](../../skills/ship/SKILL.md#fast-mode) keeps the full shipping workflow, including self-review, the review bot, CI, and the finish condition. P0 and P1 findings still block. P2 and P3 findings are recorded as deferred, without fixes, extra investigations, follow-up tickets, or another review round solely for those findings. A completed bot verdict with only P2/P3 satisfies the review gate; a pending bot run does not.
+
+The PR and final reply name fast mode and disclose deferred findings. Repository-required checks, approvals, and explicit instructions to fix a finding still apply. Omitting `--fast` starts a new run with the normal threshold; resuming a PR preserves its recorded mode unless you explicitly request a different one. Fast mode saves the work of chasing lower-priority findings and keeps the same merge-ready finish line. It never merges the PR.
+
 Next: [Steer with principle names](./05-principles.md).
