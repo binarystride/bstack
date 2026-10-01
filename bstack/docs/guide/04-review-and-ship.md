@@ -61,4 +61,14 @@ An open PR starts collecting blockers immediately: checks fail, reviewers commen
 
 To hand an agent a whole ticket and come back to a finished PR, use [`/ship`](../../skills/ship/SKILL.md). It runs these steps in order, loops with your review bot, and stops at a PR you only need to read and merge.
 
+## Ship a small change with `/ship-fast`
+
+```text
+/ship-fast add an empty state to the saved searches list using the existing empty-state component. verify the empty and populated states in the running app, then open a draft PR.
+```
+
+[`/ship-fast`](../../skills/ship-fast/SKILL.md) delivers a tested draft PR for a small, well-defined change. It reads the relevant code and project rules, implements the change, runs the required checks, and checks the diff as its author. It reports pending CI and independent review without starting a bot loop. The author check does not replace the independent review described above, and a draft is not a merge-ready PR.
+
+Use it for changes that follow an established pattern and have a clear finish condition. Changes to payment behavior, permissions, stored data shapes, or other substantial contracts need the fuller workflow, even when the diff is short. If the task grows beyond fast mode, the agent explains why and asks before switching to `/ship`. Repository-required checks and reviews still apply.
+
 Next: [Steer with principle names](./05-principles.md).
