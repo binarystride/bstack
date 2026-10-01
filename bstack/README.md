@@ -46,7 +46,7 @@ One external tool gets used, and only by the steps that reach for it:
 
 | Tool | Needed by | Without it |
 |---|---|---|
-| `gh` | `/done`, when they read PRs and issues; `/ship` and `/ship-fast`, to open and check their PRs | `/done` loses its PR and issue evidence; shipping skills need another way to reach the PR |
+| `gh` | `/done`, when they read PRs and issues; `/ship`, to open and watch its PR | `/done` loses its PR and issue evidence; `/ship` needs another way to reach the PR |
 
 Everything else works on plain git.
 
@@ -74,8 +74,7 @@ Invoke the one that matches the step you're on. Nothing routes for you, and noth
 | [`/interrogate`](./skills/interrogate/SKILL.md) | you have a diff and want several different models to try to break it, including a strict code-quality lens. |
 | [`/walk-bug`](./skills/walk-bug/SKILL.md) | you have one bug report, error, or complaint and want the cause found and explained in the shape of a good PR description: one-sentence verdict, things to note, the failure path drawn as call trees, pseudocode, or diffs, then the fix. |
 | [`/walk-me`](./skills/walk-me/SKILL.md) | you have a list of findings and want them one at a time: short explanation, recommended fix, your decision, then the change. |
-| [`/ship`](./skills/ship/SKILL.md) | you want one ticket taken to a merge-ready PR while you're away: evidence first, the smallest design, self-review, then a loop with your review bot capped at five runs. ends ready, needs decision, or stopped, and never merges. |
-| [`/ship-fast`](./skills/ship-fast/SKILL.md) | you want a small, well-defined change taken to a tested draft PR. focused investigation, local verification, and an author check; pending CI and independent review are reported without a bot loop. |
+| [`/ship`](./skills/ship/SKILL.md) | you want one ticket taken to a merge-ready PR while you're away: evidence first, the smallest design, self-review, then a loop with your review bot capped at five runs. add `--fast` to defer P2/P3 findings while retaining both reviews and blocking on P0/P1. ends ready, needs decision, or stopped, and never merges. |
 | [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
 | [`/unslop`](./skills/unslop/SKILL.md) | you explicitly ask to remove AI tells from writing. opt-in only. |
 | [`/technical-writing`](./skills/technical-writing/SKILL.md) | layered doc standard (Diátaxis + Google developer style + STE + Global English) for docs, RFCs, readmes, PR descriptions, commit messages. |
