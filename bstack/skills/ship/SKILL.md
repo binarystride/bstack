@@ -1,6 +1,6 @@
 ---
 name: ship
-description: "Take one ticket or task all the way to a merge-ready pull request while the human is away: investigate with production evidence, frame it as the senior architect who owns the outcome, build the smallest change, self-review, open the PR, then loop with the repository's review bot until both reviews are clean. Ends READY, NEEDS DECISION or STOPPED, and never merges. Use when the user invokes /ship or explicitly asks to take a ticket or task to a finished PR without supervision. Do not use for ordinary coding requests, reviews, or questions."
+description: "Take one ticket or task to a merge-ready pull request: investigate, frame, build, self-review, then loop with the repository's review bot. Use /ship --fast to keep both reviews while deferring P2 and P3 findings; P0 and P1 still block. Ends READY, NEEDS DECISION or STOPPED, and never merges. Use when the user invokes /ship or explicitly asks to take a ticket or task to a finished PR without supervision. Do not use for ordinary coding requests, reviews, or questions."
 ---
 
 # Ship
@@ -10,6 +10,23 @@ You own this task from the ticket to a merge-ready pull request. Work as the sen
 The input is a ticket id, an issue, a task description, or the URL of a PR that an earlier run opened. With a PR URL, resume: read the PR description, commits, review threads, bot comments and CI, then continue from the first phase that is not finished.
 
 Read the repository's agent instructions first (`AGENTS.md`, `CLAUDE.md` and the docs they point to). They override this skill where the two conflict. Where they ask for the human's approval before a step listed under "What you do without asking", invoking this skill is that approval. Where they forbid a step, the ban stands.
+
+## Fast mode
+
+```text
+/ship --fast add an empty state using the existing component
+```
+
+Without `--fast`, follow the normal workflow below. `--fast` changes the review acceptance threshold, not the implementation or verification steps. Keep self-review, the repository's review bot, the selected review mode and effort tier, CI, and the finish condition. The flag belongs to Ship; do not pass it to `/review` or the bot.
+
+In fast mode, apply this policy to findings from self-review, the bot, and human reviewers:
+
+- **P0 and P1 block.** Verify and fix or otherwise disposition them through the normal triage process. Never lower a severity to pass the gate. Use the review skill's severity definitions; classify ungraded or ambiguous findings before applying the cutoff, and correct a label that contradicts its stated consequence.
+- **P2 and P3 are nonblocking.** Record them as deferred under `--fast` in the PR review record. Do not fix them, run further investigation, file follow-up tickets, request a decision, or trigger another review solely for these findings. A deferred finding is not fixed or disproved.
+- **Clean means no unresolved blocking findings.** A completed self-review or bot verdict containing only P2/P3 satisfies the review gate. Use that definition wherever the phases below require a clean review, actionable findings, or resolution of remaining findings. Count only blocking findings toward fix-loop and redesign triggers. Pending or timed-out reviews are not clean; the existing review budgets and exhaustion rules still apply.
+- **Repository requirements still apply.** Do not waive required checks, approval rules, or explicit user instructions to fix a particular finding. Record deferred findings and handle their threads as described in [triage](references/triage.md).
+
+Record `default` or `fast` in the PR description and review record. On resume, use the mode explicitly requested for that run; if none is specified, preserve the recorded mode, falling back to default when no mode is recorded. Reassess outstanding findings when the mode changes and keep the existing bot-run count. A READY result in fast mode must name the mode and any deferred P2/P3 findings so it cannot be mistaken for a finding-free review.
 
 ## Rules for the whole run
 
@@ -92,6 +109,8 @@ Prove it on the real thing before you move on:
 
 ## Phase 5: Self-review
 
+Apply the active review acceptance threshold from [Fast mode](#fast-mode). In fast mode, a Med review with only deferred P2/P3 findings meets readiness; those findings do not send the run back to Low. Run `/review` as separate reporting passes, not its `--fix` loop, so Ship applies the threshold and controls which findings get fixed.
+
 Choose the review mode separately from the effort tier. Use `--quick` by default. Use `--deep` instead when the change affects money (payments, refunds, prices, orders), authentication or permissions, or stored data shapes, or when it spans several modules. Do not use `--ultra`: the review bot is the second review. An explicit user-selected mode or tier takes precedence.
 
 Choose the tier by what the next review needs to establish:
@@ -128,7 +147,13 @@ Each round:
 5. Make all of this round's fixes, self-review the fix commits with the Phase 5 mode, tier selection and brief, push once, and update the PR description.
 6. Trigger another run only if the push changed behaviour. A push that changed only comments, docs, names or formatting does not need one.
 
-The loop ends when the verdict on the head commit is clean, when the last push changed no behaviour and every remaining finding is fixed or declined with evidence, or when the budget is spent and self-review of the head commit is clean.
+The loop ends when any of these conditions holds:
+
+- A completed verdict on the head commit is clean under the active acceptance threshold.
+- A completed bot verdict covers all behavioral changes, the last push changed no behaviour, and every remaining finding is fixed, declined with evidence, or deferred under `--fast`.
+- The budget is spent and self-review of the head commit is clean.
+
+In fast mode, a completed verdict with only P2/P3 ends the loop without another push or bot run solely for those findings.
 
 If two rounds find new defects in the same flow, stop patching and go back to Phase 3, within the once-per-run limit from Phase 5.
 
@@ -139,20 +164,20 @@ Check the record, not your memory:
 - The branch is up to date with the base branch, with no conflicts.
 - CI is green on the head commit.
 - The Phase 5 review record covers the current change, including a clean Med readiness review of any later fixes, or the user's explicitly selected tier.
-- Every review thread is resolved, except human threads you disagreed with, which are listed under "Needs your decision".
+- Every review thread is resolved, except human threads you disagreed with, which are listed under "Needs your decision", and P2/P3 threads explicitly deferred under `--fast`, which are recorded as nonblocking. Repository-required thread resolution or approval still applies.
 - The last bot verdict covers the head commit's changes, or the loop ended by one of its other rules. A merge from the base branch that needed no conflict resolution in this PR's files does not need a new run.
 - The finish condition passes, and the PR description shows the results.
 - The PR description matches the head commit.
 
 Then:
 
-1. File follow-up tickets for defects outside the scope. Search the tracker for duplicates first, assign each ticket to the person who started the run unless the owner is clear, and link them in the PR description. Skip speculative ones.
+1. File follow-up tickets for defects outside the scope. Search the tracker for duplicates first, assign each ticket to the person who started the run unless the owner is clear, and link them in the PR description. Skip speculative ones and P2/P3 findings deferred under `--fast`.
 2. Move the ticket to its review state and tick the checklist items this PR completes.
 3. Mark the PR ready for review, unless that would start a bot run; then leave it as a draft and say so. Never merge.
 4. End with one line, `Ship exit: READY`, `Ship exit: NEEDS DECISION` or `Ship exit: STOPPED`, then the PR link and at most five numbered lines on what the human should look at.
 
 For STOPPED, skip steps 2 and 3: leave the PR as a draft and the ticket where it is.
 
-- **READY:** nothing needs the human except the merge.
-- **NEEDS DECISION:** the PR is complete with defaults, and at least one question needs the human.
+- **READY:** nothing needs the human except the merge. Under `--fast`, say that readiness uses the P0/P1 threshold and list or link the deferred P2/P3 findings.
+- **NEEDS DECISION:** the PR is complete with defaults, and at least one question needs the human. This also covers completed code awaiting required reviewer approval or permitted closure of a human review thread.
 - **STOPPED:** no PR, or a draft PR that cannot go further. The evidence says not to build it, or the work is blocked on something only the human can provide.
