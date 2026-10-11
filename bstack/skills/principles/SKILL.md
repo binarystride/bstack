@@ -1,11 +1,11 @@
 ---
 name: principles
-description: "The twenty bstack principles, one rule each. Read when a principle is cited by name, in a skill, a review, or the user's own words, and you need the rule behind the name rather than the label."
+description: "The twenty bstack principles and shared codebase design and simplification guidance. Read when a principle is cited by name, in a skill, a review, or the user's own words, and you need the rule behind the name rather than the label."
 ---
 
 # Principles
 
-One rule per file under [`references/`](references/). A skill or a person cites a principle by name; this index says what each name means and points at the full rule.
+Each principle has its own file under [`references/`](references/). This index says what each name means and points at its rule and the shared design and refactoring guidance.
 
 Cite a principle only with the decision it changed. A citation with no decision behind it is the tell that the name was dropped rather than applied.
 
@@ -63,3 +63,7 @@ Turning a repeated correction into structure.
 | principle | rule |
 |---|---|
 | [encode-lessons-in-structure](references/encode-lessons-in-structure.md) | Encode the rule as a lint, metadata flag, runtime check, or script instead of more text. |
+
+## Shared design and refactoring guidance
+
+These references hold the detailed guidance used by the principles and Ship. Read [Codebase Design](references/codebase-design.md) when choosing module ownership, interfaces, seams, and test coverage. Read [Code Simplification](references/code-simplification.md) when improving working code without changing its behavior. The existing principles link to these rules rather than maintaining separate versions.

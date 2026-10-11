@@ -61,7 +61,7 @@ An open PR starts collecting blockers immediately: checks fail, reviewers commen
 
 To hand an agent a whole ticket and come back to a finished PR, use [`/ship`](../../skills/ship/SKILL.md). It runs these steps in order, loops with your review bot, and stops at a PR you only need to read and merge.
 
-Before final verification and self-review, Ship makes one simplification pass over the task's changed code and affected callers. It applies worthwhile edits, preserves behavior, and reruns affected checks. Clearer code is the goal; leaving the code unchanged is a valid result.
+Before final verification and self-review, Ship makes one pass over the task's changed code and affected callers using [Codebase Design](../../skills/principles/references/codebase-design.md) and [Code Simplification](../../skills/principles/references/code-simplification.md). These shared references cover useful module ownership, interface tests, and incremental changes that preserve behavior. Ship applies worthwhile edits and verifies them; leaving code unchanged is a valid result.
 
 ## Use a more lenient review threshold with `/ship --fast`
 

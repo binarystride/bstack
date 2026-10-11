@@ -102,11 +102,7 @@ Then decide:
 
 ### Simplify before final verification
 
-Once the implementation works and its relevant checks pass, make one simplification pass over the task's changed code and affected callers. Apply [laziness-protocol](../principles/references/laziness-protocol.md) and [minimize-reader-load](../principles/references/minimize-reader-load.md).
-
-1. Look for redundant state, unclear names, unnecessary nesting, pass-through helpers, and repeated rules that belong together. Judge the whole flow, including what callers must know.
-2. Apply only changes that make the code easier to follow and preserve its behavior. Keep useful abstractions; do not add layers for hypothetical reuse. If the benefit or equivalence is unclear, leave the code unchanged. No change is a valid result.
-3. Rerun affected checks after edits. Inspect the diff for changes to outputs, errors, side effects, and their order. Undo your simplification if it obscures the flow or changes behavior; do not weaken checks to keep it.
+Once the implementation works and its relevant checks pass, read [Codebase Design](../principles/references/codebase-design.md) and [Code Simplification](../principles/references/code-simplification.md). Make one pass over the task's changed code and affected callers: decide which improvements earn their keep, apply them, and verify them using those references. Leaving code unchanged is a valid outcome.
 
 Keep this pass within the task and in a separate commit when it changes code. Do not broaden the PR or repeat the pass just to find more cleanup. On resume, skip a completed pass unless the task's code changed. Later fixes still follow Phase 5 and Phase 7 verification and review rules. Under `--fast`, do not use this pass to revisit deferred P2/P3 findings.
 
