@@ -100,6 +100,18 @@ Then decide:
 - Write only tests that would catch a real regression.
 - Commit in small, ordered commits.
 
+### Simplify before final verification
+
+Once the implementation works and its relevant checks pass, make one simplification pass over the task's changed code and affected callers. Apply [laziness-protocol](../principles/references/laziness-protocol.md) and [minimize-reader-load](../principles/references/minimize-reader-load.md).
+
+1. Look for redundant state, unclear names, unnecessary nesting, pass-through helpers, and repeated rules that belong together. Judge the whole flow, including what callers must know.
+2. Apply only changes that make the code easier to follow and preserve its behavior. Keep useful abstractions; do not add layers for hypothetical reuse. If the benefit or equivalence is unclear, leave the code unchanged. No change is a valid result.
+3. Rerun affected checks after edits. Inspect the diff for changes to outputs, errors, side effects, and their order. Undo your simplification if it obscures the flow or changes behavior; do not weaken checks to keep it.
+
+Keep this pass within the task and in a separate commit when it changes code. Do not broaden the PR or repeat the pass just to find more cleanup. On resume, skip a completed pass unless the task's code changed. Later fixes still follow Phase 5 and Phase 7 verification and review rules. Under `--fast`, do not use this pass to revisit deferred P2/P3 findings.
+
+### Verify the final implementation
+
 Prove it on the real thing before you move on:
 
 - **Logic or data change:** replay a meaningful window of production records (for example 30 days) through the old and the new logic, read-only, and report every difference.
