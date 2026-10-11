@@ -65,4 +65,4 @@ bstack/
 
 ## License
 
-MIT. bstack started as a portable build of [poteto's pstack](https://github.com/cursor/plugins/tree/main/pstack), which is MIT licensed, and much of its text still comes from pstack. Both copyright notices are in [`LICENSE`](./LICENSE).
+MIT. bstack started as a portable build of [poteto's pstack](https://github.com/cursor/plugins/tree/main/pstack), which is MIT licensed, and much of its text still comes from pstack. Shared design and simplification guidance also adapts Matt Pocock's and Addy Osmani's skills. The copyright notices and permission terms are in [`LICENSE`](./LICENSE).

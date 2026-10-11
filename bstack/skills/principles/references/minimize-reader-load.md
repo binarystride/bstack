@@ -9,11 +9,9 @@ Maintainability is the work a reader must do to understand code. Track two axes:
 
 **The pattern:**
 
-- **Collapse layers** that do not earn their keep: wrappers with one caller, adapters with no second implementation, indirection introduced for a future that never came. Inline them.
-- **Make adjacent layers change the abstraction.** A layer that repeats the same methods and arguments adds reader load without compression. Collapse pass-through layers.
-- **Demand interface compression.** A broad interface that hides little complexity makes readers learn both the surface and the implementation. Prefer boundaries that hide meaningful decisions.
-- **Shrink state scope:** prefer pure functions (returns over mutations), locals over fields, fields over module state, and module state over globals. Derive instead of sync.
+- **Assess layers with [Codebase Design](codebase-design.md).** It owns interface depth, the deletion test, locality, seam placement, and interface tests. Count what callers must understand, not just files or function calls.
+- **Shrink state scope:** prefer locals over fields, fields over module state, and module state over globals. Derive values instead of maintaining synchronized copies.
 - **Name the invariant at the boundary,** not in every consumer, so the reader learns it once.
 - Before adding a layer or a piece of state, ask: does this reduce reader load somewhere else by at least as much?
 
-**The test:** Can a new reader answer "where does X come from?" and "what can change X?" in under 30 seconds? If not, cut layers or cut state.
+**The test:** Can a new reader answer "where does X come from?" and "what can change X?" in under 30 seconds? If not, find the layer or state ownership that hides the answer and simplify it using [Code Simplification](code-simplification.md).

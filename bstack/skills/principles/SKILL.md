@@ -1,11 +1,11 @@
 ---
 name: principles
-description: "The twenty bstack principles, one rule each. Read when a principle is cited by name, in a skill, a review, or the user's own words, and you need the rule behind the name rather than the label."
+description: "The twenty bstack principles and shared codebase design and simplification guidance. Read when a principle is cited by name, in a skill, a review, or the user's own words, and you need the rule behind the name rather than the label."
 ---
 
 # Principles
 
-One rule per file under [`references/`](references/). A skill or a person cites a principle by name; this index says what each name means and points at the full rule.
+Each principle has its own file under [`references/`](references/). This index says what each name means and points at its rule and the shared design and refactoring guidance.
 
 Cite a principle only with the decision it changed. A citation with no decision behind it is the tell that the name was dropped rather than applied.
 
@@ -19,7 +19,7 @@ How much to build, and when to rethink the design.
 | [foundational-thinking](references/foundational-thinking.md) | Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious. |
 | [redesign-from-first-principles](references/redesign-from-first-principles.md) | Redesign as if the requirement had been a foundational assumption from day one, instead of bolting it on. |
 | [subtract-before-you-add](references/subtract-before-you-add.md) | Remove dead weight, redundant validators, and stub references first, then build on the simpler base. |
-| [minimize-reader-load](references/minimize-reader-load.md) | Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope. |
+| [minimize-reader-load](references/minimize-reader-load.md) | Reduce layers and mutable state; keep helpers that hide meaningful rules and remove pass-through layers. |
 | [outcome-oriented-execution](references/outcome-oriented-execution.md) | Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code. |
 | [experience-first](references/experience-first.md) | Choose user delight over implementation convenience; ship fewer polished features over more rough ones. |
 | [exhaust-the-design-space](references/exhaust-the-design-space.md) | Build 2-3 competing prototypes and compare side by side before committing. |
@@ -63,3 +63,7 @@ Turning a repeated correction into structure.
 | principle | rule |
 |---|---|
 | [encode-lessons-in-structure](references/encode-lessons-in-structure.md) | Encode the rule as a lint, metadata flag, runtime check, or script instead of more text. |
+
+## Shared design and refactoring guidance
+
+These references hold the detailed guidance used by the principles and Ship. Read [Codebase Design](references/codebase-design.md) when choosing module ownership, interfaces, seams, and test coverage. Read [Code Simplification](references/code-simplification.md) when improving working code without changing its behavior. The existing principles link to these rules rather than maintaining separate versions.

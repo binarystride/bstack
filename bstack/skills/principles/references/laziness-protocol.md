@@ -2,11 +2,10 @@
 
 Writing code is cheap for you, which makes over-engineering easy. Counter it by borrowing a human maintainer's fatigue. Aim for the most result with the least code and complexity.
 
-- **Prefer deletion.** When asked to refactor or improve, look for removals before additions.
-- **Maintain a flat call hierarchy.** Avoid deep call chains. A rich interface that hides substantial work is not a deep call chain. If answering a question requires tracing through more than 3 files or layers, flatten it.
-- **Consolidate decisions.** Do not repeat the same choice in several places. Put it behind one source of truth and pass the result as a simple flag.
-- **Minimize the diff.** Make the smallest change that solves the problem. Fewer lines beat "elegant" boilerplate.
+- **Prefer deletion.** Apply [subtract-before-you-add](subtract-before-you-add.md) before introducing a new mechanism.
+- **Minimize the diff.** Make the smallest change that solves the observed problem. Do not broaden the task merely because adjacent code could be improved.
 - **Question the threading.** If a task asks you to pass a new signal through types, schemas, pipelines, or similar layers, stop and look for a more direct path.
-- **Sweat the small leaks.** Remove tiny pass-throughs, representation leaks, and duplicated choices before they spread. Small leaks compound into permanent coordination costs.
+
+For simplification, apply [Code Simplification](code-simplification.md). It owns behavior preservation, clarity, conventions, scope, and incremental verification. For decisions about extracting, retaining, or removing a module, apply [Codebase Design](codebase-design.md). Do not flatten a useful module merely because its implementation spans several files.
 
 **Prime directive:** If a human developer would find the code exhausting to maintain, it is a bad solution. Be lazy. Stay simple.

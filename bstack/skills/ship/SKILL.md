@@ -100,6 +100,14 @@ Then decide:
 - Write only tests that would catch a real regression.
 - Commit in small, ordered commits.
 
+### Simplify before final verification
+
+Once the implementation works and its relevant checks pass, read [Codebase Design](../principles/references/codebase-design.md) and [Code Simplification](../principles/references/code-simplification.md). Make one pass over the task's changed code and affected callers: decide which improvements earn their keep, apply them, and verify them using those references. Leaving code unchanged is a valid outcome.
+
+Keep this pass within the task and in a separate commit when it changes code. Do not broaden the PR or repeat the pass just to find more cleanup. On resume, skip a completed pass unless the task's code changed. Later fixes still follow Phase 5 and Phase 7 verification and review rules. Under `--fast`, do not use this pass to revisit deferred P2/P3 findings.
+
+### Verify the final implementation
+
 Prove it on the real thing before you move on:
 
 - **Logic or data change:** replay a meaningful window of production records (for example 30 days) through the old and the new logic, read-only, and report every difference.

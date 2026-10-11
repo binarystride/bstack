@@ -116,7 +116,7 @@ Twenty short rules, one per file, indexed by the [`principles`](./skills/princip
 | [foundational-thinking](./skills/principles/references/foundational-thinking.md) | core | Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious. |
 | [redesign-from-first-principles](./skills/principles/references/redesign-from-first-principles.md) | core | Redesign as if the requirement had been a foundational assumption from day one, instead of bolting it on. |
 | [subtract-before-you-add](./skills/principles/references/subtract-before-you-add.md) | core | Remove dead weight, redundant validators, and stub references first, then build on the simpler base. |
-| [minimize-reader-load](./skills/principles/references/minimize-reader-load.md) | core | Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope. |
+| [minimize-reader-load](./skills/principles/references/minimize-reader-load.md) | core | Reduce layers and mutable state; keep helpers that hide meaningful rules and remove pass-through layers. |
 | [outcome-oriented-execution](./skills/principles/references/outcome-oriented-execution.md) | core | Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code. |
 | [experience-first](./skills/principles/references/experience-first.md) | core | Choose user delight over implementation convenience; ship fewer polished features over more rough ones. |
 | [exhaust-the-design-space](./skills/principles/references/exhaust-the-design-space.md) | core | Build 2-3 competing prototypes and compare side by side before committing. |
@@ -135,6 +135,8 @@ Twenty short rules, one per file, indexed by the [`principles`](./skills/princip
 
 </details>
 
+The shared [Codebase Design](./skills/principles/references/codebase-design.md) and [Code Simplification](./skills/principles/references/code-simplification.md) references provide the detailed design and refactoring guidance used by these principles and Ship. They adapt Matt Pocock's and Addy Osmani's skills locally, with source attribution and license notices, without requiring either upstream skill to be installed.
+
 ## license
 
-MIT. bstack started as a portable build of [poteto's pstack](https://github.com/cursor/plugins/tree/main/pstack), which is MIT licensed, and much of its text still comes from pstack. Both copyright notices are in [`LICENSE`](./LICENSE).
+MIT. bstack started as a portable build of [poteto's pstack](https://github.com/cursor/plugins/tree/main/pstack), which is MIT licensed, and much of its text still comes from pstack. Shared design and simplification guidance also adapts Matt Pocock's and Addy Osmani's skills. The copyright notices and permission terms are in [`LICENSE`](./LICENSE).
